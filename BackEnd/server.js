@@ -22,7 +22,7 @@ const PORT = configs.PORT
 
 app.get('/', (req, res) => {
     res.send({
-        message: "Welcome to my app at PORT"
+        message: "Welcome to my app at PORT 8080"
     })
 })
 
