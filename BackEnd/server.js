@@ -1,10 +1,10 @@
 import express from "express"
 import colors from "colors"
-import dotenv from "dotenv"
 import morgan from "morgan"
 import connectDB  from "./config/db.js"
+import configs from "../BackEnd/config/index.js"
 //configure env
-dotenv.config()
+
 
 // DB config
 connectDB()
@@ -18,11 +18,11 @@ app.use(express.urlencoded({extended: true}))
 //app.use(cookieParser())
 app.use(morgan('dev'))
 //PORT
-const PORT = process.env.PORT || 8080;
+const PORT = configs.PORT
 
 app.get('/', (req, res) => {
     res.send({
-        message: "Welcome to my app"
+        message: "Welcome to my app at PORT"
     })
 })
 
