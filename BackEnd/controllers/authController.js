@@ -29,7 +29,7 @@ import { cookieOptions } from '../utils/cookieOptions.js'
     })
     // create a token for user
     const token = await user.getJwtToken()
-     user.password = undefined
+    user.password = undefined
 
      res.cookie("token",token, cookieOptions)
      res.status(200).json({
@@ -37,4 +37,58 @@ import { cookieOptions } from '../utils/cookieOptions.js'
         token,
         user
      })
+ })
+
+ /*
+@ login
+@ route : /api/v1/auth/login
+@desciption : User login controller
+@parameters : email, password
+@retruns User Object
+ */
+export const login = asyncHandler( async (req, res) => {
+    const {email, password} = req.body
+
+    if (!email || !password) {
+        throw new CustomError("Email and Password are required")
+    }
+    const user = await User.findOne({email}).select("+password")
+    //console.log(user);
+    if (!user){
+        throw new CustomError("Invalid Credintials", 400)
+    }
+    const passwordMatch = await user.comparePassword(password)
+    console.log(passwordMatch);
+    if(!passwordMatch){
+        throw new CustomError("Invalid Credentials")
+    }
+    
+        const token = await user.getJwtToken()
+        user.password = undefined
+        res.cookie("token",token,cookieOptions)
+        res.status(200).json({
+            success: true,
+            token,
+            user
+        })
+        
+})
+
+/*
+@ Log out
+@ route /api/v1/auth/logout
+@description : set cookie token to null and expire cookie
+@ parameters : none
+@ return : success message
+
+*/
+ export const logout = asyncHandler(async (req, res) => {
+    res.cookie("token", null, {
+        expires: new Date(Date.now()),
+        httpOnly: true
+    })
+    res.status(200).json({
+        success: true,
+        message: "Logged out Successfully"
+    })
  })
