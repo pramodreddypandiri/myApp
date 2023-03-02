@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
-import AuthRoles from '../utils/authRoles'
-
-const userSchema = mongoose.Schema(
+import AuthRoles from '../utils/authRoles.js'
+import JWT from "jsonwebtoken";
+import bcrypt from 'bcryptjs'
+import configs from "../config/index.js";
+import crypto from "crypto"
+const userSchema = new mongoose.Schema(
     {
         name: {
             type : String,
@@ -41,3 +44,55 @@ const userSchema = mongoose.Schema(
     }
 
 ) 
+
+//pre-save hook for password
+userSchema.pre('save', async function(next){
+    // set encrypted pwd with bcrypt
+    //if pwd already existed
+    if(!this.isModified("password")){
+        return next()
+    }
+    console.log(this
+        .password);
+    // when giving pwd for first time
+    this.password = await bcrypt.hash(this.password,10)
+    next()
+    
+})
+// adding methods on user schema
+userSchema.methods = {
+    // compare password
+    comparePassword: async function(enteredPaswword){
+        return await bcrypt.compare(enteredPaswword, this.password)
+    },
+
+    //generate jwt token 
+    getJwtToken: function (){
+        return JWT.sign(
+            {
+                _id: this._id,
+                role: this.role
+            },
+            configs.JWT_SECRET,
+            {
+                expiresIn: configs.JWT_EXPIRY
+            }
+            
+        )
+    } ,
+    // generate token for forgot password
+    generateForgotPasswordToken : function (){
+        const forgotToken = crypto.randomBytes(20).toString('hex');
+
+        //save to DB
+        this.forgotPasswordToken = crypto.createHash("sha256")
+        .update(forgotToken).digest("hex")
+        // ser expiry
+        this.forgotPasswordExpiry = Date.now() + 20 * 60 * 1000
+
+        // return token to user
+        return forgotToken
+    }
+}
+
+export default mongoose.model("User", userSchema)

@@ -1,5 +1,5 @@
 //define roles
- AuthRoles = {
+ const AuthRoles = {
     ADMIN : "ADMIN",
     USER : "USER"
 }
