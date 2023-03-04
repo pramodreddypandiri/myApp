@@ -10,11 +10,11 @@ const Register = () => {
     const [password, setPassword] = useState("")
     const navigate = useNavigate()
     // form submit function
-    const handleSubmit = async (e) => {
+    const handleRegisterSubmit = async (e) => {
         e.preventDefault()
         try {
             const res = await axios.post(`/api/v1/auth/register`, {name, email,password})
-            console.log(res);
+            //console.log(res);
             if(res && res?.data?.success){
                 toast.success("Registered Successfully")
                 navigate('/login')
@@ -24,8 +24,8 @@ const Register = () => {
             }
             
         } catch (error) {
-            console.log(error);
-            toast.error("Something went wrong")
+            //console.log(error?.response?.data?.message);
+            toast.error(error?.response?.data?.message)
         }
     } 
   return (
@@ -35,7 +35,7 @@ const Register = () => {
             <div className='register-title-div m-10'>
                <h1 className='register-title text-2xl md:text-4xl'>Register Here</h1>
             </div>
-            <form onSubmit={handleSubmit} className='w-[300px] md:w-[350px] flex flex-col gap-5'>
+            <form onSubmit={handleRegisterSubmit} className='w-[300px] md:w-[350px] flex flex-col gap-5'>
                 <div className='user-name w-full'>
                   <input type={'text'} placeholder="Enter your Name" value={name} onChange={(e) => {setName(e.target.value)}}required className='border-2 border-black p-2 rounded-lg w-full'/>
                 </div>
