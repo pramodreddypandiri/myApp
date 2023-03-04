@@ -2,6 +2,8 @@ import React from 'react'
 import Footer from './Footer'
 import Header from './Header'
 import {Helmet} from 'react-helmet'
+import { Toaster } from 'react-hot-toast';
+
 const Layout = ({children,description, keywords, title,author}) => {
   return (
     <div>
@@ -16,6 +18,7 @@ const Layout = ({children,description, keywords, title,author}) => {
             </Helmet>
         <Header/>
           <main>
+          <Toaster />
              {children}
           </main>
         

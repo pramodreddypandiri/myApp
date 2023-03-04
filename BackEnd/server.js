@@ -5,6 +5,7 @@ import connectDB  from "./config/db.js"
 import configs from "../BackEnd/config/index.js"
 import authRoutes from './routes/authRoutes.js'
 import cookieParser from "cookie-parser"
+import cors from 'cors'
 
 //configure env
 
@@ -18,7 +19,7 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(cookieParser())
-//app.use(cors())
+app.use(cors())
 app.use(morgan('dev'))
 
 //routes
