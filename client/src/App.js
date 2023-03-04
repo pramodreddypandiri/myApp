@@ -10,7 +10,8 @@ function App() {
         <Route exact path='/' element={<HomePage/>} />
         <Route exact path='/contact' element={<Contact/>}/>
         <Route exact path='/policy' element={<Policy/>} />
-        <Route exact path='/*' element={<PageNotFound/>} />
+        <Route exact path='/*'
+        element={<PageNotFound/>} />
       </Routes>
     </>
   );

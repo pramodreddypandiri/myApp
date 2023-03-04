@@ -3,7 +3,7 @@ import Layout from '../components/Layout/Layout'
 
 const Policy = () => {
   return (
-    <Layout>
+    <Layout title={'Privacy Polciy - My App'}>
         <h1>We follow all data regulation policies</h1>
     </Layout>
   )

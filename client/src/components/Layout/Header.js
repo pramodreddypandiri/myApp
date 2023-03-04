@@ -5,12 +5,12 @@ import {close, menu} from '../../assets'
 const Header = () => {
   const [toggle,setToggle] = useState(false)
   return (
-    <nav className='navbar flex justify-between  items-center h-16 lg:h-20'>
+    <nav className='navbar flex justify-between  items-center h-16 lg:h-20 mx-5'>
       {/* Large screen */}
-      <div className='ml-5'>
+      <div className='ml-4'>
         <p className='text-2xl font-bold hover:text-blue-600 cursor-pointer'>My App</p>
       </div>
-      <ul className='navitems hidden sm:flex justify-end items-center flex-1 mr-5'>
+      <ul className='navitems hidden sm:flex justify-end items-center flex-1 '>
       {NavItems.map((item, index) => (
           <NavLink to={`${item?.Route}`}>
              <li className={`item font-normal hover:text-blue-600 cursor-pointer  ${index === NavItems.length-1 ? 'mr-0' : 'mr-10'}`  } key={item?.id}>{item?.Title}</li>
