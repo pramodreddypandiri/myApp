@@ -14,4 +14,9 @@ router.post('/login',login)
 //logout route
 router.post('/logout',isLoggedIn,logout)
 
+//protected routes
+router.get("user-auth", isLoggedIn, (req, res) => {
+    res.status(200).send({ok: true})
+})
+
 export default router
