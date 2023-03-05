@@ -13,8 +13,8 @@ import { cookieOptions } from '../utils/cookieOptions.js'
  */
 
  export const register = asyncHandler( async (req, res) => {
-    const {name, email, password} = req.body
-    if(!name || !email || !password){
+    const {name, email, password,question} = req.body
+    if(!name || !email || !password || !question){
         throw new CustomError("All mandatory fields are required")
     }
     // check if user already existed
@@ -25,7 +25,7 @@ import { cookieOptions } from '../utils/cookieOptions.js'
     }
     // create a user
     const user = await User.create({
-        name, email, password
+        name, email, password, question
     })
     // create a token for user
     const token = await user.getJwtToken()
@@ -92,3 +92,43 @@ export const login = asyncHandler( async (req, res) => {
         message: "Logged out Successfully"
     })
  })
+
+ /*
+@ FORGOT PASSWORD
+@ description :  controller for forgot password
+@ route : /forgotpassword
+@ returns a token  
+*/
+export const forgotPassword = asyncHandler(async (req, res) => {
+    try{
+       const {email,question, newPassword} = req.body
+       
+       if(!email || !newPassword || !question){
+        throw new CustomError("All Fields are required")
+       }
+       const user = await User.findOne({email, question})
+       if(!user){
+        res.status(404).json({
+            success: false,
+            message : "Incorrect email or answer"
+        })
+        
+       }
+       else{
+       user.password = newPassword
+       user.save()
+       res.status(200).json({
+        success: true,
+        message: "Password changed Successfully"
+       })
+    }
+       
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong",
+            error
+        })
+    }
+})

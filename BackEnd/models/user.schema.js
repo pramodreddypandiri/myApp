@@ -32,7 +32,11 @@ const userSchema = new mongoose.Schema(
             type : String,
             maxLength: [20, "Profession must be under 20 cahrs"]
         },
-        imcome: {
+        question: {
+            type : String,
+            required : true
+        },
+        income: {
             type: Number,
         },
         forgotPasswordToken: String,
@@ -50,12 +54,15 @@ userSchema.pre('save', async function(next){
     // set encrypted pwd with bcrypt
     //if pwd already existed
     if(!this.isModified("password")){
+        console.log("inside isModified");
         return next()
     }
     console.log(this
         .password);
     // when giving pwd for first time
     this.password = await bcrypt.hash(this.password,10)
+    console.log(this
+        .password);
     next()
     
 })
