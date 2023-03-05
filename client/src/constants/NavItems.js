@@ -14,6 +14,11 @@ export const NavItems = [
         id:"signup",
         Title: "Sign Up",
         Route: "/register"
+     },
+     {
+      id: "logout",
+      Title: "Log Out",
+      Route : "/logout"
      }
 
 
