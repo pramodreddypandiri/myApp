@@ -3,9 +3,13 @@ import Layout from '../../components/Layout/Layout'
 import { useState } from 'react'
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { useAuth } from '../../context/auth';
+import { useNavigate } from 'react-router-dom';
 const Login = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [auth, setAuth] = useAuth()
+    const navigate = useNavigate()
     //handle login (submit)
     const handleLoginSubmit = async (e) => {
         e.preventDefault()
@@ -13,7 +17,14 @@ const Login = () => {
             const res = await axios.post('/api/v1/auth/login',{email, password})
             console.log(res);
             if(res && res?.data?.success){
+                setAuth({
+                    ...auth,
+                    user : res?.data?.user,
+                    token: res?.data?.token
+                })
+                localStorage.setItem("auth", JSON.stringify(res?.data))
                 toast.success("Logged in  successfully")
+                navigate("/")
             }
             else{
                 toast.error(res?.data?.message)
