@@ -16,8 +16,12 @@ router.post('/login',login)
 router.post('/logout',isLoggedIn,logout)
 // forgot password route
 router.post('/forgot-password', forgotPassword)
-//protected routes
+//protected routes for user
 router.get("/user-auth", isLoggedIn, (req, res) => {
+    res.status(200).send({ok: true})
+})
+//protected routes for admin
+router.get("/admin-auth", isLoggedIn,isAdmin, (req, res) => {
     res.status(200).send({ok: true})
 })
 

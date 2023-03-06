@@ -2,7 +2,7 @@ import React from 'react'
 import { Watch } from 'react-loader-spinner'
 import { useState, useEffect } from 'react'
 import { useNavigate , useLocation} from 'react-router-dom'
-const Spinner = () => {
+const Spinner = ({path = "login"}) => {
     const [count, setCount] = useState(5)
     const navigate = useNavigate()
     const location = useLocation()
@@ -10,13 +10,13 @@ const Spinner = () => {
         const interval = setInterval(() => {
             setCount((prev) => --prev)
         }, 1000)
-        count === 0 && navigate('/login',{
+        count === 0 && navigate(`/${path}`,{
             //storing and passing location to go to same page after 
             // after log in (after redirecting)
             state : location.pathname,
         })
         return () => clearInterval(interval)
-    }, [count,navigate,location])
+    }, [count,navigate,location, path])
   return (
     <div className='flex flex-col h-[80vh] justify-center items-center '>
     
