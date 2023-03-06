@@ -72,7 +72,7 @@ const Header = () => {
         <div className={`${toggle ? 'flex' : 'hidden'} p-6 bg-gray-600 absolute top-10 right-0 ml-4 mr-2 my-2 min-w-[150px] rounded-lg sidebar`}>
           <ul className='flex flex-col'>
           <NavLink to={`/myhome`}>
-        <li className={`item font-normal hover:text-blue-600 cursor-pointer ml-5`} key={"home"}>Home</li>
+        <li className={`item font-normal hover:text-blue-600 cursor-pointer ml-5`} key={"home"}>My Home</li>
      </NavLink>
      {
       !auth.user ? (

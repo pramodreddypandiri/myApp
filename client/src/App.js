@@ -12,6 +12,7 @@ import ForgotPassword from "./pages/Auth/ForgotPassword.js";
 import AdminRoute from "./components/Routes/AdminRoute.js";
 import AdminDashboard from "./pages/Admin/AdminDashboard.js";
 import Dashboard from "./pages/User/Dashboard.js";
+import Manage from "./pages/User/Manage.js";
 function App() {
   return (
     <>
@@ -19,6 +20,9 @@ function App() {
         <Route exact="true" path='/' element={<HomePage/>} />
         <Route path="/myhome" element={<PrivateRoute/>}>
            <Route  path='' element={<MyHome/>} /> 
+        </Route>
+        <Route path="/manage" element={<PrivateRoute/>}>
+           <Route  path='' element={<Manage/>} /> 
         </Route>
         <Route path="/analytics" element={<PrivateRoute/>}>
            <Route  path='user' element={<Dashboard/>} /> 
