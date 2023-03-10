@@ -13,6 +13,9 @@ import AdminRoute from "./components/Routes/AdminRoute.js";
 import AdminDashboard from "./pages/Admin/AdminDashboard.js";
 import Dashboard from "./pages/User/Dashboard.js";
 import Manage from "./pages/User/Manage.js";
+import CreateCategory from "./pages/User/CreateCategory.js";
+import SetCurrency from "./pages/User/SetCurrency.js";
+import Profile from "./pages/User/Profile.js";
 function App() {
   return (
     <>
@@ -22,7 +25,10 @@ function App() {
            <Route  path='' element={<MyHome/>} /> 
         </Route>
         <Route path="/manage" element={<PrivateRoute/>}>
-           <Route  path='' element={<Manage/>} /> 
+           <Route  path='settings' element={<Manage/>} /> 
+           <Route  path='settings/create-category' element={<CreateCategory/>} /> 
+           <Route  path='settings/set-currency' element={<SetCurrency/>} /> 
+           <Route  path='settings/myprofile' element={<Profile/>} /> 
         </Route>
         <Route path="/analytics" element={<PrivateRoute/>}>
            <Route  path='user' element={<Dashboard/>} /> 

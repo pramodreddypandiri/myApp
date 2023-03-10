@@ -50,7 +50,7 @@ const Header = () => {
           <NavLink to={`/login`}>
              <li onClick={handleLogOut} className={`item font-normal hover:text-blue-600 cursor-pointer ml-5`} key={"logout"}>Log out</li>
           </NavLink>
-          <NavLink to={`/manage`}>
+          <NavLink to={`/manage/settings`}>
              <li  className={`item font-normal hover:text-blue-600 cursor-pointer ml-5`} key={"manage"}>Manage</li>
           </NavLink>
           <NavLink to={`/analytics/${auth.user.role === "ADMIN" ? 'admin' : 'user'}`}>
@@ -89,7 +89,7 @@ const Header = () => {
           <NavLink to={`/login`}>
              <li onClick={handleLogOut} className={`item font-normal hover:text-blue-600 cursor-pointer ml-5`} key={"logout"}>Log out</li>
           </NavLink>
-          <NavLink to={`/manage`}>
+          <NavLink to={`/manage/settings`}>
              <li  className={`item font-normal hover:text-blue-600 cursor-pointer ml-5`} key={"manage"}>Manage</li>
           </NavLink>
           <NavLink to={`/analytics`}>
