@@ -7,7 +7,7 @@ import Category from '../models/category.schema.js'
 
 /*
 * @Create category
-* @route : /api/auth/v1/create-category
+* @route : /api/auth/v1/category/create-category
 * @description :  controller for creating
  new cat in DB
  * @Parametes title, userId
@@ -55,7 +55,7 @@ export const createCategory = asyncHandler(async (req, res) => {
 })
 /*
 * @Delete category
-* @route : /api/auth/v1/delete-category
+* @route : /api/auth/v1/category/delete-category
 * @description :  controller for deleting a cat in DB
  * @Parametes title, userId
  @ returns success,message 
@@ -82,7 +82,7 @@ export const deleteCategory  = asyncHandler(async (req, res) => {
 })
 /*
 * @Update category
-* @route : /api/auth/v1/update-category
+* @route : /api/auth/v1/category/update-category
 * @description :  controller for deleting a cat in DB
  * @Parametes title, userId
  @ returns success,message 
@@ -111,7 +111,7 @@ export const updateCategory = asyncHandler(async (req, res) => {
 })
 /*
 * @Get all categories
-* @route : /api/auth/v1/categories
+* @route : /api/auth/v1/category/categories
 * @description :  controller for getting all cat in DB
  * @Parametes title, userId
  @ returns success,message 
