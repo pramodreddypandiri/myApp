@@ -98,3 +98,35 @@ export const updateTransaction = asyncHandler(async (req, res) => {
         })
     }
 })
+/*
+* @getAll transactions
+* @route : /api/v1/transaction/update-transaction/:id
+* @description :  controller for fetching all transactions of a user
+ * @Parametes {userId}
+ @ returns success message all trxnxs
+ */
+export const getAllTransactionsOfUser = asyncHandler(async (req, res) => {
+    try{
+        const {userId} = req.body
+        if(!userId){
+            throw new CustomError("User Id is required")
+        }
+        const allTransactionsOfUser = await Transaction.find({ userId})
+        if(!allTransactionsOfUser){
+            throw new CustomError("Unable to get all transaction")
+        }
+        res.status(200).json({
+            success: true,
+            message : "Fetched all trnxns successfully",
+            allTransactionsOfUser,
+            totalCount : allTransactionsOfUser.length 
+        })
+
+    } catch(error){
+        console.log(error);
+        res.status(500).json({
+            success: false,
+            message: "Error in get all transactionns"
+        })
+    }
+})
