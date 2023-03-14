@@ -1,5 +1,5 @@
 import express from "express";
-import { createTransaction, deleteTransaction, getAllTransactionsOfUser, updateTransaction } from "../controllers/transactionController.js";
+import { createTransaction, deleteTransaction, getAllTransactionsOfUser, getAllTransactionsOfUserUnderCat, updateTransaction } from "../controllers/transactionController.js";
 import {isLoggedIn} from '../middlewares/auth.middleware.js'
 import formidable from 'express-formidable'
 const router = express.Router();
@@ -11,4 +11,7 @@ router.post('/delete-transaction/:id', isLoggedIn, deleteTransaction)
 router.post('/update-transaction/:id', isLoggedIn,formidable(), updateTransaction)
 //get all trxns of user
 router.get('/transactions', isLoggedIn, getAllTransactionsOfUser)
+// get all transactions under a cat
+router.get('/category-transactions', isLoggedIn, getAllTransactionsOfUserUnderCat)
+
 export default router

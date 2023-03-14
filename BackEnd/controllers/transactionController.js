@@ -100,7 +100,7 @@ export const updateTransaction = asyncHandler(async (req, res) => {
 })
 /*
 * @getAll transactions
-* @route : /api/v1/transaction/update-transaction/:id
+* @route : /api/v1/transaction/transactions
 * @description :  controller for fetching all transactions of a user
  * @Parametes {userId}
  @ returns success message all trxnxs
@@ -127,6 +127,34 @@ export const getAllTransactionsOfUser = asyncHandler(async (req, res) => {
         res.status(500).json({
             success: false,
             message: "Error in get all transactionns"
+        })
+    }
+})
+/*
+* @getAll transactions under particular category
+ * @route : /api/v1/transaction/category-transactions
+* @description :  controller for fetching all transactions of a user under a given category
+ * @Parametes {userId, categoryId}
+ @ returns success message all trxnxs under given category
+ */
+export const getAllTransactionsOfUserUnderCat = asyncHandler(async(req, res) => {
+    try{
+        const {userId, categoryId} = req.body
+        if(!userId || !categoryId){
+            throw new CustomError("user id and category id both are required")
+        }
+        const allCatTransactions = await Transaction.find({userId, categoryId}).populate('categoryId')
+        res.status(200).json({
+            success: true,
+            message: "Fetched all trnxnx under cat",
+            allCatTransactions,
+            count: allCatTransactions.length
+        })
+    } catch(error){
+        console.log(error);
+        res.status(500).json({
+            success: false,
+            message: "Error in get trnxnx under cat"
         })
     }
 })
