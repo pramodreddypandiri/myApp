@@ -63,8 +63,8 @@ export const createCategory = asyncHandler(async (req, res) => {
 export const deleteCategory  = asyncHandler(async (req, res) => {
    try{
     const {id} = req.params
-    const {userId} = req.body
-    const deleteCat = await Category.findOneAndDelete({_id:id, userId :userId})
+    //const {userId} = req.body
+    const deleteCat = await Category.findOneAndDelete({_id:id})
     console.log(deleteCat);
     res.status(200).json({
         success: true,

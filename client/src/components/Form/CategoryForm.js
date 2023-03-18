@@ -3,7 +3,7 @@ import React from 'react'
 const CategoryForm = ({handleSubmit, value, setValue}) => {
   return (
     <>
-      <form onSubmit={handleSubmit} className='flex my-4 w-full flex-row items-center '>
+      <form onSubmit={handleSubmit} className='flex my-10 w-full flex-row items-center '>
         <div className=' w-full'>
             <input type='text ' 
             className='category-input w-full px-4 py-2'
