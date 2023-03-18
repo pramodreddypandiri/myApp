@@ -4,7 +4,7 @@ import CustomError from '../utils/customError.js'
 import slugify from 'slugify'
 import Category from '../models/category.schema.js'
 
-
+import mongoose from 'mongoose'
 /*
 * @Create category
 * @route : /api/auth/v1/category/create-category
@@ -118,9 +118,14 @@ export const updateCategory = asyncHandler(async (req, res) => {
  */
 export const getAllCategories = asyncHandler(async (req, res) => {
     try {
-        const {userId} = req.body
-        const allCatOfUser = await Category.find({ userId: { $exists: true } })
-        console.log("after allCat");
+        //console.log(req.body);
+        //console.log(req.query);
+        const userId = req.query.userId
+        //console.log(userId);
+        //const userid = new mongoose.Types.ObjectId(userId);
+        //console.log(typeof(userid));
+        const allCatOfUser = await Category.find({userId : userId})
+        //console.log("after allCat");
         res.status(200).json({
             success: true,
             message: "Fetched all cats",

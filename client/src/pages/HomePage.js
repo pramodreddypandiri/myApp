@@ -9,6 +9,7 @@ const HomePage = () => {
     <Layout title={'Welcome'}>
         <h1> Home Page</h1>
         <pre>{JSON.stringify(auth,null,4)}</pre>
+        <h1>{JSON.stringify(auth.user._id)}</h1>
     </Layout>
   )
 }
