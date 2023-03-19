@@ -74,6 +74,7 @@ const CreateCategory = () => {
             toast.error("Something went wrong in Update Title")
         }
     }
+    // method to fetch all user categories
     const getAllCategories = async () => {
         
         console.log(typeof(userId));
