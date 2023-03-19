@@ -21,7 +21,7 @@ const CreateTransaction = () => {
     const [allTransactionsOfUser, setAllTransactionsOfUser] = useState()
     const userId = auth?.user?._id
     const dateFormat = 'MM/DD/YYYY';
-    console.log(userId);
+    //console.log(userId);
     //console.log(currDate.toString());
     //create transaction method
     const handleCreateTransaction = async (e) => {
@@ -38,6 +38,11 @@ const CreateTransaction = () => {
                 //onsole.log(data);
                 if(data?.success){
                     toast.success("Created Transaction")
+                    //update all transactions
+                    getAllTransactionsOfUser()
+                    //make all fields to empty/default
+                    
+
                 }
                 else{
                     toast.error("Something went wrong")
@@ -46,6 +51,22 @@ const CreateTransaction = () => {
             console.log(error);
             toast.error("Something went wrong")
           }
+    }
+    // method to delete transaction 
+    const handleDeleteTransaction = async(id) => {
+        try{
+            const {data} = await axios.post(`api/v1/transaction/delete-transaction/${id}`)
+            if (data?.success){
+                toast.success(data?.message)
+                getAllTransactionsOfUser()
+            }
+            else{
+                toast.error("Something went wrong")
+            }
+        } catch(error){
+            console.log(error);
+            toast.error("Something Went ")
+        }
     }
     // method to fetch all user categories
     const getAllCategories = async () => {
@@ -68,12 +89,12 @@ const CreateTransaction = () => {
     }
     // get all transactions of user
     const getAllTransactionsOfUser = async () => {
-        console.log(userId);
+        //console.log(userId);
         try{
             const{ data } = await axios.get('/api/v1/transaction/transactions', {params : {userId : userId}})
             if (data?.success){
                 setAllTransactionsOfUser(data?.allTransactionsOfUser)
-                console.log(data?.allTransactionsOfUser);
+                //console.log(data?.allTransactionsOfUser);
             }
             else{
                 toast.error("Something went wrong in fecthing transactions")
@@ -95,17 +116,17 @@ const CreateTransaction = () => {
                 <h1 className='text-2xl font-bold'>Create Transaction</h1>
                 <div className='transaction-input border-2  border-black my-10 rounded-lg'>
                     <form onSubmit={handleCreateTransaction} className='p-5 flex flex-col gap-6'>
-                        <input type='number' className='p-2' placeholder=' Amount' value={amount } onChange={(e) => setAmount(e.target.value)}/>
+                        <input type='number' min='1' className='p-2' placeholder=' Amount' value={amount } onChange={(e) => setAmount(e.target.value)}/>
                         <input type={'text'} className='p-2' placeholder='Description' value={description } onChange={(e) => setDescription(e.target.value)}/>
-                        <DatePicker onChange={(value) => {setDate(value)}
+                        <DatePicker  onChange={(value) => {setDate(value)}
                             } defaultValue={dayjs(formattedDate, dateFormat)} format={dateFormat} />
-                        <Select bordered={false} onChange={(value) => setType(value) } defaultValue="EXPENSE" options={[{value : "INCOME", label : "INCOME"}, {
+                        <Select bordered={false} onChange={(value) => setType(value) } options={[{value : "INCOME", label : "Income"}, {
                             value: "EXPENSE",
-                            label: "EXPENSE"
+                            label: "Expense"
                         }]} >
                             
                         </Select>
-                        <Select className='category-dropdown' bordered={false} showSearch placeholder='Select Category' onChange={(value) => setCategory(value) }  >
+                        <Select className='category-dropdown' bordered={false}  placeholder='Select Category' onChange={(value) => setCategory(value) }  >
                             {categories?.map((c) => (
                                 <Option value={c._id} key={c._id}>{c.title}</Option>
                             ))}
@@ -133,13 +154,13 @@ const CreateTransaction = () => {
                         {allTransactionsOfUser?.map((t) => (
                             <>
                             <tr className='' key={t._id}>
-                                 <td className="px-6 py-4 text-left whitespace-nowrap" >{t.amount}</td>
+                                 <td className={`px-6 py-4 text-left whitespace-nowrap ${t.type === "INCOME" ? 'text-green-700' : 'text-red-700'}`} >{t.amount}</td>
                                  <td className="px-6 py-4 text-left whitespace-nowrap" >{t?.categoryId?.title}</td>
                                  <td className="px-6 py-4 text-left whitespace-nowrap" >{t.description}</td>
                                  <td className="px-6 py-4 text-left whitespace-nowrap" >{t.date}</td>
                                  <td className='align-middle text-center'>
                                  <button className='bg-black px-4 py-1 rounded-lg text-white'>Edit</button>
-                                 <button className='bg-red-700 ml-2 px-4 py-1 rounded-lg text-white'>Delete</button>
+                                 <button onClick={() => handleDeleteTransaction(t._id)} className='bg-red-700 ml-2 px-4 py-1 rounded-lg text-white'>Delete</button>
                                  </td>
                              </tr>
                          </>
