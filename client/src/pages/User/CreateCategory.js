@@ -83,7 +83,7 @@ const CreateCategory = () => {
             const {data} = await axios.get('/api/v1/category/categories', {params: { userId }})
             if(data.success){
                  setCategories(data.allCatOfUser)
-                 
+                 console.log(categories);
             }
         } catch(error){
             console.log(error);

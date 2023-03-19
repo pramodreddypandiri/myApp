@@ -107,11 +107,11 @@ export const updateTransaction = asyncHandler(async (req, res) => {
  */
 export const getAllTransactionsOfUser = asyncHandler(async (req, res) => {
     try{
-        const {userId} = req.body
+        const {userId} = req.query
         if(!userId){
             throw new CustomError("User Id is required")
         }
-        const allTransactionsOfUser = await Transaction.find({ userId})
+        const allTransactionsOfUser = await Transaction.find({ userId}).populate('categoryId')
         if(!allTransactionsOfUser){
             throw new CustomError("Unable to get all transaction")
         }
