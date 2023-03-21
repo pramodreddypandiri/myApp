@@ -4,6 +4,9 @@ import { useState, useEffect } from 'react'
 import { useAuth } from '../../context/auth'
 import axios from 'axios'
 import { toast } from 'react-hot-toast'
+import {BiEdit} from 'react-icons/bi';
+import {RiDeleteBinLine} from 'react-icons/ri'
+import { IconContext } from "react-icons";
 const AllTransactions = () => {
 
     const [allTransactionsOfUser, setAllTransactionsOfUser] = useState()
@@ -83,24 +86,37 @@ const AllTransactions = () => {
                </div>
             </div>
             <div className='all-trasactions-cards lg:hidden'>
+                <h1 className='text-2xl text-center font-bold'>All Transactions</h1> 
                 <div className='cards'>
-                <div class="w-[95%] relative max-w-md mx-auto bg-white rounded-lg border-2 border-black  shadow-md overflow-hidden">
-                        <div class=" flex absolute top-0 right-0 justify-between">
-                            
-                                <div className='date'>
-                                   <p className='px-2 py-1 rounded-lg bg-black text-white'> 21/03/23</p>
+                    {allTransactionsOfUser?.map((tx) =>(
+                        <div className="w-[95%] my-5  border-l-2 border-b-2 border-black border-solid relative max-w-md mx-auto bg-white rounded-lg   shadow-lg overflow-hidden">
+                        <div className=" flex z-[100] w-full ">
+                            <div className='date absolute  top-0 right-0'>
+                                   <p className='px-2 py-1 rounded-tr-lg bg-black text-white'>{new Date(tx.date).toLocaleDateString("en-GB")}</p>
                                 </div>
-                                    
                         </div>
-                        <div class="px-6 py-4">
-                           
-                            <p class="text-gray-700 mb-2">200</p>
-                            <p class="text-gray-700 mb-2">chicken</p>
-                            <p class="text-gray-700 mb-2 uppercase">Grocery</p>
-                            
+                        
+                        <div className="flex flex-row px-6 mt-1 py-4">
+                           <div className='details w-[90%]'>
+                                <p className={`text-gray-700 font-bold truncate mb-2 ${tx.type === "INCOME" ? 'text-green-700' : 'text-red-700' }`}>{tx.amount}</p>
+                                <p className="text-gray-700 truncate mb-2">{tx.description}</p>
+                                <p className="text-gray-700 mb-2 font-semibold truncate uppercase">{tx?.categoryId?.title}</p>
+                            </div>
+                            <div className="actions flex mt-5 flex-col gap-5">
+                                <IconContext.Provider value={{ color: "black", className: "global-class-name" }}>
+                                <BiEdit/>
+                                </IconContext.Provider>
+                                <IconContext.Provider value={{ color: "red", className: "global-class-name" }}>
+                                <RiDeleteBinLine/>
+                                </IconContext.Provider>
+                                
+                           </div>
                         </div>
                         
                     </div>
+
+                    ))}
+                
                 </div>
 
             </div>

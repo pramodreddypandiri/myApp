@@ -69,10 +69,10 @@ const Header = () => {
       <div className='sm:hidden flex flex-1 items-center justify-end
       '>
         <img src={toggle ? close : menu} className='w-[28px] h-[28px] object-contain' alt='menu' onClick={() => setToggle((prev) => !prev)}/>
-        <div className={`${toggle ? 'flex' : 'hidden'} p-6 bg-gray-600 absolute top-10 right-0 ml-4 mr-2 my-2 min-w-[150px] rounded-lg sidebar`}>
-          <ul className='flex flex-col'>
+        <div className={`${toggle ? 'flex flex-row items-center' : 'hidden'} px-2  py-4 z-[1000] bg-black text-white absolute top-10 right-0 ml-4 mr-2 my-2 min-w-[150px] rounded-lg sidebar`}>
+          <ul className='flex flex-col items-center mb-0 gap-3'>
           <NavLink to={`/myhome`}>
-        <li className={`item font-normal hover:text-blue-600 cursor-pointer uppercase ml-5`} key={"home"}>My Home</li>
+        <li className={`item font-normal  hover:text-blue-600 cursor-pointer uppercase ml-5`} key={"home"}>My Home</li>
      </NavLink>
      {
       !auth.user ? (

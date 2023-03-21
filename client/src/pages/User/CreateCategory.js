@@ -96,7 +96,7 @@ const CreateCategory = () => {
     },[])
   return (
     <Layout title={'Manage - Create Category'}>
-        <div className='flex flex-row'>
+        <div className='flex flex-col lg:flex-row'>
             <div>
                 <div>
                     <ManageMenu/>
@@ -104,10 +104,10 @@ const CreateCategory = () => {
             </div>
             <div className='ml-10 mt-10'>
                 <h4 className='text-2xl font-semibold'> Category</h4>
-                <div>
+                <div className='w-[95%]'>
                     <CategoryForm handleSubmit={handleSubmit} value={title} setValue={setTitle}/>
                 </div>
-                <div className=''>
+                <div className=' hidden lg:flex'>
                     <table className="min-w-[500px] divide-y divide-gray-200">
                         <thead className="bg-black text-white">
                             <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Title</th>
