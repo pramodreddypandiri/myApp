@@ -17,13 +17,15 @@ import CreateCategory from "./pages/User/CreateCategory.js";
 import SetCurrency from "./pages/User/SetCurrency.js";
 import Profile from "./pages/User/Profile.js";
 import CreateTransaction from "./pages/User/CreateTransaction.js";
+import AllTransactions from "./pages/User/AllTransactions.js";
 function App() {
   return (
     <>
       <Routes>
-        <Route exact="true" path='/' element={<HomePage/>} />
+        <Route path='/' element={<HomePage/>} />
         <Route path="/myhome" element={<PrivateRoute/>}>
            <Route  path='' element={<CreateTransaction/>} /> 
+           <Route  path='all-transactions' element={<AllTransactions/>} /> 
         </Route>
         <Route path="/manage" element={<PrivateRoute/>}>
            <Route  path='settings' element={<Manage/>} /> 

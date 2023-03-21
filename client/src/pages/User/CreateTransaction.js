@@ -111,16 +111,16 @@ const CreateTransaction = () => {
     },[])
   return (
      <Layout title={"Transactions - MyApp"}>
-        <div className='container mx-auto flex flex-row gap-10'>
+        <div className='container mx-auto flex flex-col lg:flex-row items-center gap-10'>
             <div className='create-transaction w-[300px]'>
                 <h1 className='text-2xl font-bold'>Create Transaction</h1>
-                <div className='transaction-input border-2  border-black my-10 rounded-lg'>
+                <div className='transaction-input border-2  border-black mb-10 rounded-lg'>
                     <form onSubmit={handleCreateTransaction} className='p-5 flex flex-col gap-6'>
                         <input type='number' min='1' className='p-2' placeholder=' Amount' value={amount } onChange={(e) => setAmount(e.target.value)}/>
                         <input type={'text'} className='p-2' placeholder='Description' value={description } onChange={(e) => setDescription(e.target.value)}/>
                         <DatePicker  onChange={(value) => {setDate(value)}
                             } defaultValue={dayjs(formattedDate, dateFormat)} format={dateFormat} />
-                        <Select bordered={false} onChange={(value) => setType(value) } options={[{value : "INCOME", label : "Income"}, {
+                        <Select bordered={false} placeholder="Select Transaction type" onChange={(value) => setType(value) } options={[{value : "INCOME", label : "Income"}, {
                             value: "EXPENSE",
                             label: "Expense"
                         }]} >
@@ -137,10 +137,10 @@ const CreateTransaction = () => {
                 </div>
 
             </div>
-            <div className='all-transactions-container'>
+            <div className='all-transactions-container hidden lg:flex lg:flex-col'>
                <h1 className='text-2xl font-bold'>All Transactions</h1> 
-               <div className='all-transactions-table'>
-               <table class="min-w-[500px] divide-y divide-gray-200">
+               <div className='all-transactions-table '>
+               <table class="min-w-[500px] overflow-x-scroll divide-y divide-gray-200">
                     <thead className="bg-black text-white">
                         <tr>
                         <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Amount</th>

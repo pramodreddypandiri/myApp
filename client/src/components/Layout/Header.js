@@ -20,18 +20,18 @@ const Header = () => {
   return (
     <nav className='navbar flex justify-between  items-center h-16 lg:h-20 mx-5'>
       {/* Large screen */}
-      <div className='ml-4'>
-        <p className='text-2xl font-bold hover:text-blue-600 cursor-pointer'>My App</p>
+      <div className=''>
+        <p className='text-2xl font-bold hover:text-blue-600 cursor-pointer mb-0'>My App</p>
       </div>
       <ul className='navitems hidden sm:flex justify-end items-center flex-1 '>
       {
         !auth.user ? (
           <NavLink to={`/`}>
-        <li className={`item font-normal hover:text-blue-600 cursor-pointer ml-5`} key={"home"}>Home</li>
+        <li className={`item font-normal hover:text-blue-600 cursor-pointer uppercase ml-5`} key={"home"}>Home</li>
      </NavLink>
         ) : (
           <NavLink to={`/myhome`}>
-        <li className={`item font-normal hover:text-blue-600 cursor-pointer ml-5`} key={"home"}>My Home</li>
+        <li className={`item font-normal hover:text-blue-600 cursor-pointer uppercase ml-5`} key={"home"}>My Home</li>
      </NavLink>
         )
       }
@@ -39,22 +39,22 @@ const Header = () => {
       !auth.user ? (
       <>
         <NavLink to={`/login`}>
-            <li className={`item font-normal hover:text-blue-600 cursor-pointer ml-5`} key={"login"}>Login</li>
+            <li className={`item font-normal hover:text-blue-600 cursor-pointer uppercase ml-5`} key={"login"}>Login</li>
         </NavLink>
         <NavLink to={`/signup`}>
-            <li className={`item font-normal hover:text-blue-600 cursor-pointer ml-5`} key={"signup"}>Sign Up</li>
+            <li className={`item font-normal hover:text-blue-600 cursor-pointer uppercase ml-5`} key={"signup"}>Sign Up</li>
         </NavLink>
      </>
       ) : (
         <>
           <NavLink to={`/login`}>
-             <li onClick={handleLogOut} className={`item font-normal hover:text-blue-600 cursor-pointer ml-5`} key={"logout"}>Log out</li>
+             <li onClick={handleLogOut} className={`item font-normal hover:text-blue-600 cursor-pointer uppercase ml-5`} key={"logout"}>Log out</li>
           </NavLink>
           <NavLink to={`/manage/settings`}>
-             <li  className={`item font-normal hover:text-blue-600 cursor-pointer ml-5`} key={"manage"}>Manage</li>
+             <li  className={`item font-normal hover:text-blue-600 cursor-pointer uppercase ml-5`} key={"manage"}>Manage</li>
           </NavLink>
           <NavLink to={`/analytics/${auth.user.role === "ADMIN" ? 'admin' : 'user'}`}>
-             <li  className={`item font-normal hover:text-blue-600 cursor-pointer ml-5`} key={"analytics"}>Analytics</li>
+             <li  className={`item font-normal hover:text-blue-600 cursor-pointer uppercase ml-5`} key={"analytics"}>Analytics</li>
           </NavLink>
           
         </>
@@ -72,28 +72,28 @@ const Header = () => {
         <div className={`${toggle ? 'flex' : 'hidden'} p-6 bg-gray-600 absolute top-10 right-0 ml-4 mr-2 my-2 min-w-[150px] rounded-lg sidebar`}>
           <ul className='flex flex-col'>
           <NavLink to={`/myhome`}>
-        <li className={`item font-normal hover:text-blue-600 cursor-pointer ml-5`} key={"home"}>My Home</li>
+        <li className={`item font-normal hover:text-blue-600 cursor-pointer uppercase ml-5`} key={"home"}>My Home</li>
      </NavLink>
      {
       !auth.user ? (
       <>
         <NavLink to={`/login`}>
-            <li className={`item font-normal hover:text-blue-600 cursor-pointer ml-5`} key={"login"}>Login</li>
+            <li className={`item font-normal hover:text-blue-600 cursor-pointer uppercase ml-5`} key={"login"}>Login</li>
         </NavLink>
         <NavLink to={`/signup`}>
-            <li className={`item font-normal hover:text-blue-600 cursor-pointer ml-5`} key={"signup"}>Sign Up</li>
+            <li className={`item font-normal hover:text-blue-600 cursor-pointer uppercase ml-5`} key={"signup"}>Sign Up</li>
         </NavLink>
      </>
       ) : (
         <>
           <NavLink to={`/login`}>
-             <li onClick={handleLogOut} className={`item font-normal hover:text-blue-600 cursor-pointer ml-5`} key={"logout"}>Log out</li>
+             <li onClick={handleLogOut} className={`item font-normal hover:text-blue-600 cursor-pointer uppercase ml-5`} key={"logout"}>Log out</li>
           </NavLink>
           <NavLink to={`/manage/settings`}>
-             <li  className={`item font-normal hover:text-blue-600 cursor-pointer ml-5`} key={"manage"}>Manage</li>
+             <li  className={`item font-normal hover:text-blue-600 cursor-pointer uppercase ml-5`} key={"manage"}>Manage</li>
           </NavLink>
           <NavLink to={`/analytics`}>
-             <li  className={`item font-normal hover:text-blue-600 cursor-pointer ml-5`} key={"analytics"}>Analytics</li>
+             <li  className={`item font-normal hover:text-blue-600 cursor-pointer uppercase ml-5`} key={"analytics"}>Analytics</li>
           </NavLink>
         </>
         
