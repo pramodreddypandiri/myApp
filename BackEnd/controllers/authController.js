@@ -48,7 +48,7 @@ import { cookieOptions } from '../utils/cookieOptions.js'
  */
 export const login = asyncHandler( async (req, res) => {
     const {email, password} = req.body
-
+    
     if (!email || !password) {
         throw new CustomError("Email and Password are required")
     }
@@ -97,7 +97,7 @@ export const login = asyncHandler( async (req, res) => {
 @ FORGOT PASSWORD
 @ description :  controller for forgot password
 @ route : /forgotpassword
-@ returns a token  
+@ returns success message 
 */
 export const forgotPassword = asyncHandler(async (req, res) => {
     try{
@@ -129,6 +129,40 @@ export const forgotPassword = asyncHandler(async (req, res) => {
             success: false,
             message: "Something went wrong",
             error
+        })
+    }
+})
+ /*
+@ Update User Profile
+@ description :  controller for forgot password
+@ route : /update-user
+@ returns a token  
+*/
+export const updateUserProfile = asyncHandler(async (req, res) => {
+    try{
+        const {id} = req.params
+        const {name, email, profession, income} = req.body
+        console.log(id,name, email, profession, income);
+        const user = await User.findByIdAndUpdate(id, {name: name, email : email, profession: profession, income: income})
+        console.log(user);
+        if(user){
+            res.status(200).json({
+                success: true,
+                message: "Updated Sccessfully",
+                user
+            })
+        }
+        else{
+            res.status(500).json({
+                success : false,
+                message: "Error in Update Profile"
+            })
+        }
+    } catch(error){
+        console.log(error);
+        res.status(500).json({
+            success: false,
+            message: "Error in Update Profile"
         })
     }
 })

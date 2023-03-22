@@ -23,6 +23,7 @@ const Login = () => {
                     user : res?.data?.user,
                     token: res?.data?.token
                 })
+                console.log(auth);
                 localStorage.setItem("auth", JSON.stringify(res?.data))
                 toast.success("Logged in  successfully")
                 navigate(location.state || "/myhome")
@@ -52,7 +53,7 @@ const Login = () => {
               <input type={'password'} placeholder="Enter password" value={password} onChange={(e) => {setPassword(e.target.value)}} required className='border-2 border-black p-2 rounded-lg w-full'/>
             </div>
             <div className='w-full'>
-                <button type='submit' className=' w-full text-white bg-black rounded-lg p-2'>Login</button>
+                <button type='submit' className='uppercase w-full text-white bg-black rounded-lg p-2'>Login</button>
             </div>
             <NavLink to='/forgot-password'>
                <p className='text-blue-800'>Forgot Password?</p>

@@ -24,7 +24,7 @@ const CreateCategory = () => {
         try{
             const {data} = await axios.post('/api/v1/category/create-category',{title, userId}) 
             if(data?.success){
-                console.log(data);
+                //console.log(data);
                 toast.success(`${data.cat.title} is created`)
                 getAllCategories()
                 setTitle("")
@@ -80,13 +80,13 @@ const CreateCategory = () => {
     // method to fetch all user categories
     const getAllCategories = async () => {
         
-        console.log(typeof(userId));
-         console.log(userId)
+        //console.log(typeof(userId));
+         //console.log(userId)
         try{
             const {data} = await axios.get('/api/v1/category/categories', {params: { userId }})
             if(data.success){
                  setCategories(data.allCatOfUser)
-                 console.log(categories);
+                // console.log(categories);
             }
         } catch(error){
             console.log(error);
@@ -105,7 +105,7 @@ const CreateCategory = () => {
             </div>
             
                 
-            <div className='ml-10 mt-10 w-[75%] p-5'>
+            <div className='m-10  w-[75%] p-5'>
                 <h4 className='text-4xl font-semibold'>Create Category</h4>
                 <div className='w-[95%]'>
                     <CategoryForm handleSubmit={handleSubmit} value={title} setValue={setTitle}/>

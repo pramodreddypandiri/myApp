@@ -50,7 +50,7 @@ const Register = () => {
                   <input type={'text'} placeholder="Favorite Actor" value={question} onChange={(e) => {setQuestion(e.target.value)}} required className='border-2 border-black p-2 rounded-lg w-full'/>
                 </div>
                 <div>
-                    <button type='submit' className=' w-full text-white bg-black rounded-lg p-2'>Register</button>
+                    <button type='submit' className=' w-full uppercase text-white bg-black rounded-lg p-2'>Register</button>
                 </div>
             </form>
            

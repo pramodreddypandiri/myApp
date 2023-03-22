@@ -1,5 +1,5 @@
 import express  from "express";
-import  {register} from '../controllers/authController.js'
+import  {register, updateUserProfile} from '../controllers/authController.js'
 import {login} from '../controllers/authController.js'
 import { logout } from "../controllers/authController.js";
 import { forgotPassword } from "../controllers/authController.js";
@@ -16,6 +16,8 @@ router.post('/login',login)
 router.post('/logout',isLoggedIn,logout)
 // forgot password route
 router.post('/forgot-password', forgotPassword)
+// update user profile
+router.post('/update-profile/:id',isLoggedIn, updateUserProfile)
 //protected routes for user
 router.get("/user-auth", isLoggedIn, (req, res) => {
     res.status(200).send({ok: true})
