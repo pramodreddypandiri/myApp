@@ -7,10 +7,8 @@ const Profile = () => {
   return (
     <Layout title={'Manage - My Profile'}>
         <div className='flex flex-row items-start'>
-            <div>
-                <div>
-                    <ManageMenu/>
-                </div>
+            <div className='w-[25%]'>
+                 <ManageMenu />
             </div>
             <div className='ml-10 mt-10'>
                 <h4 className='text-2xl font-semibold'>My Profile</h4>

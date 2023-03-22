@@ -17,7 +17,7 @@ const Layout = ({children,description, keywords, title,author}) => {
                 
             </Helmet>
         <Header/>
-          <main>
+          <main className='overflow-y-scroll'>
           <Toaster />
              {children}
           </main>

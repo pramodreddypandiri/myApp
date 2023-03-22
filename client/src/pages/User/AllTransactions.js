@@ -52,7 +52,7 @@ const AllTransactions = () => {
     },[])
   return (
     <Layout title={"All Transactios - MyApp"}>
-            <div className='all-transactions-container container mx-auto items-center    w-full hidden lg:flex lg:flex-col'>
+            {/* <div className='all-transactions-container container mx-auto items-center    w-full hidden '>
                <h1 className='text-2xl font-bold'>All Transactions</h1> 
                <div className='all-transactions-table w-full flex items-center justify-between'>
                <table class="min-w-[500px] mx-auto overflow-x-scroll divide-y divide-gray-200">
@@ -84,12 +84,12 @@ const AllTransactions = () => {
                 </table>
 
                </div>
-            </div>
-            <div className='all-trasactions-cards lg:hidden'>
+            </div> */}
+            <div className='all-trasactions-cards  '>
                 <h1 className='text-2xl text-center font-bold'>All Transactions</h1> 
-                <div className='cards'>
+                <div className='cards-section flex flex-row flex-wrap'>
                     {allTransactionsOfUser?.map((tx) =>(
-                        <div className="w-[95%] my-5  border-l-2 border-b-2 border-black border-solid relative max-w-md mx-auto bg-white rounded-lg   shadow-lg overflow-hidden">
+                        <div className="w-full my-5 mx-2 border-l-2 border-b-2 border-black border-solid relative max-w-md mx-auto bg-white rounded-lg   shadow-lg overflow-hidden">
                         <div className=" flex z-[100] w-full ">
                             <div className='date absolute  top-0 right-0'>
                                    <p className='px-2 py-1 rounded-tr-lg bg-black text-white'>{new Date(tx.date).toLocaleDateString("en-GB")}</p>

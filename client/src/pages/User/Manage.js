@@ -6,7 +6,7 @@ const Manage = () => {
   return (
     <Layout title={"Manage - My App"}>
         <div>
-        <ManageMenu/>
+           <ManageMenu/>
         </div>
     </Layout>
   )

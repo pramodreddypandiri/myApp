@@ -6,6 +6,9 @@ import { useAuth } from '../../context/auth'
 import { Select } from 'antd'
 import { DatePicker, Space } from 'antd';
 import dayjs from 'dayjs';
+import {BiEdit} from 'react-icons/bi';
+import {RiDeleteBinLine} from 'react-icons/ri'
+import { IconContext } from "react-icons";
 const {Option} = Select
 const CreateTransaction = () => {
     const options = { month: '2-digit', day: '2-digit', year: 'numeric' };
@@ -111,8 +114,8 @@ const CreateTransaction = () => {
     },[])
   return (
      <Layout title={"Transactions - MyApp"}>
-        <div className='container mx-auto flex flex-col lg:flex-row items-center gap-10'>
-            <div className='create-transaction w-[300px]'>
+        <div className='container mx-auto flex flex-col lg:flex-row overflow-y-scroll items-center lg:items-start '>
+            <div className='create-transaction w-[300px] lg:mx-10 lg:w-[400px]'>
                 <h1 className='text-2xl font-bold'>Create Transaction</h1>
                 <div className='transaction-input border-2  border-black mb-10 rounded-lg'>
                     <form onSubmit={handleCreateTransaction} className='p-5 flex flex-col gap-6'>
@@ -137,7 +140,42 @@ const CreateTransaction = () => {
                 </div>
 
             </div>
-            <div className='all-transactions-container hidden lg:flex lg:flex-col'>
+            <div className='recent-trasactions-cards  overflow-y-scroll'>
+                <h1 className='text-2xl text-center font-bold'>Recent Transactions</h1> 
+                <div className='cards-section flex flex-row flex-wrap'>
+                    {allTransactionsOfUser?.map((tx) =>(
+                        <div className="w-full my-5 mx-2 border-l-2 border-b-2 border-black border-solid relative max-w-md  bg-white rounded-lg   shadow-lg overflow-hidden">
+                        <div className=" flex  w-full ">
+                            <div className='date absolute  top-0 right-0'>
+                                   <p className='px-2 py-1 rounded-tr-lg bg-black text-white'>{new Date(tx.date).toLocaleDateString("en-GB")}</p>
+                                </div>
+                        </div>
+                        
+                        <div className="flex flex-row px-6 mt-1 py-4">
+                           <div className='details w-[90%]'>
+                                <p className={`text-gray-700 font-bold truncate mb-2 ${tx.type === "INCOME" ? 'text-green-700' : 'text-red-700' }`}>{tx.amount}</p>
+                                <p className="text-gray-700 truncate mb-2">{tx.description}</p>
+                                <p className="text-gray-700 mb-2 font-semibold truncate uppercase">{tx?.categoryId?.title}</p>
+                            </div>
+                            <div className="actions flex mt-5 flex-col gap-5">
+                                <IconContext.Provider value={{ color: "black", className: "global-class-name" }}>
+                                <BiEdit className='cursor-pointer'/>
+                                </IconContext.Provider>
+                                <IconContext.Provider value={{ color: "red", className: "global-class-name" }}>
+                                <RiDeleteBinLine className='cursor-pointer' onClick={() => handleDeleteTransaction(tx._id)}/>
+                                </IconContext.Provider>
+                                
+                           </div>
+                        </div>
+                        
+                    </div>
+
+                    ))}
+                
+                </div>
+
+            </div>
+            {/* <div className='all-transactions-container hidden lg:flex lg:flex-col'>
                <h1 className='text-2xl font-bold'>All Transactions</h1> 
                <div className='all-transactions-table '>
                <table class="min-w-[500px] overflow-x-scroll divide-y divide-gray-200">
@@ -157,10 +195,18 @@ const CreateTransaction = () => {
                                  <td className={`px-6 py-4 text-left whitespace-nowrap ${t.type === "INCOME" ? 'text-green-700' : 'text-red-700'}`} >{t.amount}</td>
                                  <td className="px-6 py-4 text-left whitespace-nowrap" >{t?.categoryId?.title}</td>
                                  <td className="px-6 py-4 text-left whitespace-nowrap" >{t.description}</td>
-                                 <td className="px-6 py-4 text-left whitespace-nowrap" >{t.date}</td>
+                                 <td className="px-6 py-4 text-left whitespace-nowrap" >{new Date(t.date).toLocaleDateString("en-GB")}</td>
                                  <td className='align-middle text-center'>
-                                 <button className='bg-black px-4 py-1 rounded-lg text-white'>Edit</button>
-                                 <button onClick={() => handleDeleteTransaction(t._id)} className='bg-red-700 ml-2 px-4 py-1 rounded-lg text-white'>Delete</button>
+                                 <button className='bg-black px-4 py-1 rounded-lg text-white'>
+                                        <IconContext.Provider value={{ color: "black", className: "global-class-name" }}>
+                                        <BiEdit/>
+                                        </IconContext.Provider>
+                                 </button>
+                                 <button onClick={() => handleDeleteTransaction(t._id)} className='bg-red-700 ml-2 px-4 py-1 rounded-lg text-white'>
+                                    <IconContext.Provider value={{ color: "red", className: "global-class-name" }}>
+                                    <RiDeleteBinLine/>
+                                    </IconContext.Provider>
+                                 </button>
                                  </td>
                              </tr>
                          </>
@@ -169,7 +215,7 @@ const CreateTransaction = () => {
                 </table>
 
                </div>
-            </div>
+            </div> */}
 
         </div>
 

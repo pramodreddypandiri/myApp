@@ -7,6 +7,9 @@ import axios from 'axios'
 import { toast } from 'react-hot-toast'
 import CategoryForm from '../../components/Form/CategoryForm';
 import {Modal} from 'antd';
+import {BiEdit} from 'react-icons/bi';
+import {RiDeleteBinLine} from 'react-icons/ri'
+import { IconContext } from "react-icons";
 const CreateCategory = () => {
     const [categories, setCategories] = useState([]);
     const [auth, setAuth] = useAuth();
@@ -96,18 +99,47 @@ const CreateCategory = () => {
     },[])
   return (
     <Layout title={'Manage - Create Category'}>
-        <div className='flex flex-col lg:flex-row'>
-            <div>
-                <div>
-                    <ManageMenu/>
-                </div>
+        <div className='flex w-ull flex-col  lg:flex-row '>
+            <div className=''>
+                 <ManageMenu />
             </div>
-            <div className='ml-10 mt-10'>
-                <h4 className='text-2xl font-semibold'> Category</h4>
+            
+                
+            <div className='ml-10 mt-10 w-[75%] p-5'>
+                <h4 className='text-4xl font-semibold'>Create Category</h4>
                 <div className='w-[95%]'>
                     <CategoryForm handleSubmit={handleSubmit} value={title} setValue={setTitle}/>
                 </div>
-                <div className=' hidden lg:flex'>
+                <div className='category-cards  overflow-y-scroll'>
+                <h1 className='text-2xl text-center font-bold'>My Categories</h1> 
+                <div className='cards-section flex flex-row flex-wrap'>
+                    {categories?.map((c) =>(
+                        <div key={c._id} className="w-full my-5 mx-2 border-l-2 border-b-2 border-black border-solid relative max-w-md  bg-white rounded-lg   shadow-lg overflow-hidden">
+                        
+                        <div className="flex flex-row px-6 mt-1 py-4">
+                           <div className='details w-[90%]'>
+                              <p className="text-gray-700 mb-2 font-semibold truncate uppercase">{c.title}</p>
+                            </div>
+                            <div className="actions flex  flex-row gap-5">
+                                <IconContext.Provider value={{ color: "black", className: "global-class-name" }}>
+                                <BiEdit  onClick={() => {setVisible(true); setUpdatedTitle(c.title); setSelected(c)}} className='cursor-pointer'/>
+                                </IconContext.Provider>
+                                <IconContext.Provider value={{ color: "red", className: "global-class-name" }}>
+                                <RiDeleteBinLine className='cursor-pointer'  onClick={() => {handleDelete(c._id)
+                                        }} />
+                                </IconContext.Provider>
+                                
+                           </div>
+                        </div>
+                        
+                    </div>
+
+                    ))}
+                
+                </div>
+
+            </div>
+                {/* <div className='flex'>
                     <table className="min-w-[500px] divide-y divide-gray-200">
                         <thead className="bg-black text-white">
                             <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Title</th>
@@ -120,9 +152,13 @@ const CreateCategory = () => {
                                    <tr className=''>
                                         <td className="px-6 py-4 text-left whitespace-nowrap" key={c._id}>{c.title}</td>
                                         <td className='align-middle text-center'>
-                                        <button onClick={() => {setVisible(true); setUpdatedTitle(c.title); setSelected(c)}} className='bg-black px-4 py-1 rounded-lg text-white'>Edit</button>
-                                        <button onClick={() => {handleDelete(c._id)
-                                        }} className='bg-red-700 ml-2 px-4 py-1 rounded-lg text-white'>Delete</button>
+                                        <IconContext.Provider value={{ color: "black", className: "global-class-name" }}>
+                                        <BiEdit onClick={() => {setVisible(true); setUpdatedTitle(c.title); setSelected(c)}} />
+                                        </IconContext.Provider>
+                                        <IconContext.Provider value={{ color: "red", className: "global-class-name" }}>
+                                        <RiDeleteBinLine onClick={() => {handleDelete(c._id)
+                                        }}  />
+                                        </IconContext.Provider>
                                         </td>
                                     </tr>
                                 </>
@@ -130,7 +166,7 @@ const CreateCategory = () => {
                             
                         </tbody>
                     </table>
-                </div>
+                </div> */}
                 <Modal onCancel={() => setVisible(false)} footer={null} open={visible}>
                     <CategoryForm value={updatedTitle} handleSubmit={handleUpdate} setValue={setUpdatedTitle}/>
                 </Modal>
