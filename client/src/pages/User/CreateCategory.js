@@ -103,9 +103,7 @@ const CreateCategory = () => {
             <div className=''>
                  <ManageMenu />
             </div>
-            
-                
-            <div className='m-10  w-[75%] p-5'>
+            <div className='lg:m-10  lg:w-[75%] p-5'>
                 <h4 className='text-4xl font-semibold'>Create Category</h4>
                 <div className='w-[95%]'>
                     <CategoryForm handleSubmit={handleSubmit} value={title} setValue={setTitle}/>
@@ -139,34 +137,6 @@ const CreateCategory = () => {
                 </div>
 
             </div>
-                {/* <div className='flex'>
-                    <table className="min-w-[500px] divide-y divide-gray-200">
-                        <thead className="bg-black text-white">
-                            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Title</th>
-                            <th className="px-6 py-3 text-xs font-medium uppercase tracking-wider">Actions</th>
-                        </thead>
-                        <tbody>
-                           
-                           {categories?.map((c) => (
-                                <>
-                                   <tr className=''>
-                                        <td className="px-6 py-4 text-left whitespace-nowrap" key={c._id}>{c.title}</td>
-                                        <td className='align-middle text-center'>
-                                        <IconContext.Provider value={{ color: "black", className: "global-class-name" }}>
-                                        <BiEdit onClick={() => {setVisible(true); setUpdatedTitle(c.title); setSelected(c)}} />
-                                        </IconContext.Provider>
-                                        <IconContext.Provider value={{ color: "red", className: "global-class-name" }}>
-                                        <RiDeleteBinLine onClick={() => {handleDelete(c._id)
-                                        }}  />
-                                        </IconContext.Provider>
-                                        </td>
-                                    </tr>
-                                </>
-                                ))}
-                            
-                        </tbody>
-                    </table>
-                </div> */}
                 <Modal onCancel={() => setVisible(false)} footer={null} open={visible}>
                     <CategoryForm value={updatedTitle} handleSubmit={handleUpdate} setValue={setUpdatedTitle}/>
                 </Modal>

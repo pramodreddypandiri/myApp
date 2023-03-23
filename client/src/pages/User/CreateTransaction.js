@@ -6,6 +6,7 @@ import { useAuth } from '../../context/auth'
 import { Select } from 'antd'
 import { DatePicker, Space } from 'antd';
 import dayjs from 'dayjs';
+import {Modal} from 'antd';
 import {BiEdit} from 'react-icons/bi';
 import {RiDeleteBinLine} from 'react-icons/ri'
 import { IconContext } from "react-icons";
@@ -22,6 +23,15 @@ const CreateTransaction = () => {
     const [type, setType] = useState("EXPENSE")
     const [auth, setAuth] = useAuth();
     const [allTransactionsOfUser, setAllTransactionsOfUser] = useState()
+    //Edit modal
+    const [visible , setVisible] = useState(false)
+    const [editedAmount,setEditedAmount] = useState()
+    const [editedDescription,setEditedDescription] = useState()
+    const [newDate, setNewDate] = useState()
+    const [newType, setNewType] = useState()
+    const [newCategory, setNewCategory] = useState()
+    const [seletedTransaction, setSelectedTransaction] = useState()
+     
     const userId = auth?.user?._id
     const dateFormat = 'MM/DD/YYYY';
     //console.log(userId);
@@ -108,6 +118,30 @@ const CreateTransaction = () => {
             toast.error("Error in get All Transactions")
         }
     }
+    //Edit 
+    const handleEditTransaction = async (e) => {
+        e.preventDefault()
+        try{
+            const editedTransactionData = new FormData()
+            editedTransactionData.append("amount", editedAmount)
+            editedTransactionData.append("description", editedDescription)
+            editedTransactionData.append("type", newType)
+            editedTransactionData.append("date", newDate)
+            editedTransactionData.append("categoryId", newCategory)
+            const {data} = await axios.post(`/api/v1/transaction/update-transaction/${seletedTransaction}`, editedTransactionData)
+            if(data?.success){
+                toast.success("Updated Successfully")
+                getAllTransactionsOfUser()
+                setVisible(false)
+            }
+            else{
+                toast.error("Something went wrong")
+            }
+        } catch(error){
+            console.log(error);
+        }
+
+    }
     useEffect( () => {
        getAllCategories();
        getAllTransactionsOfUser()
@@ -159,7 +193,7 @@ const CreateTransaction = () => {
                             </div>
                             <div className="actions flex mt-5 flex-col gap-5">
                                 <IconContext.Provider value={{ color: "black", className: "global-class-name" }}>
-                                <BiEdit className='cursor-pointer'/>
+                                <BiEdit onClick={()=> {setVisible(true); setSelectedTransaction(tx._id); setEditedAmount(tx.amount); setEditedDescription(tx.description); setNewDate(tx.date); setNewType(tx.type); setNewCategory(tx?.categoryId?.title)}} className='cursor-pointer'/>
                                 </IconContext.Provider>
                                 <IconContext.Provider value={{ color: "red", className: "global-class-name" }}>
                                 <RiDeleteBinLine className='cursor-pointer' onClick={() => handleDeleteTransaction(tx._id)}/>
@@ -175,48 +209,34 @@ const CreateTransaction = () => {
                 </div>
 
             </div>
-            {/* <div className='all-transactions-container hidden lg:flex lg:flex-col'>
-               <h1 className='text-2xl font-bold'>All Transactions</h1> 
-               <div className='all-transactions-table '>
-               <table class="min-w-[500px] overflow-x-scroll divide-y divide-gray-200">
-                    <thead className="bg-black text-white">
-                        <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Amount</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Category</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Description</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Date</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {allTransactionsOfUser?.map((t) => (
-                            <>
-                            <tr className='' key={t._id}>
-                                 <td className={`px-6 py-4 text-left whitespace-nowrap ${t.type === "INCOME" ? 'text-green-700' : 'text-red-700'}`} >{t.amount}</td>
-                                 <td className="px-6 py-4 text-left whitespace-nowrap" >{t?.categoryId?.title}</td>
-                                 <td className="px-6 py-4 text-left whitespace-nowrap" >{t.description}</td>
-                                 <td className="px-6 py-4 text-left whitespace-nowrap" >{new Date(t.date).toLocaleDateString("en-GB")}</td>
-                                 <td className='align-middle text-center'>
-                                 <button className='bg-black px-4 py-1 rounded-lg text-white'>
-                                        <IconContext.Provider value={{ color: "black", className: "global-class-name" }}>
-                                        <BiEdit/>
-                                        </IconContext.Provider>
-                                 </button>
-                                 <button onClick={() => handleDeleteTransaction(t._id)} className='bg-red-700 ml-2 px-4 py-1 rounded-lg text-white'>
-                                    <IconContext.Provider value={{ color: "red", className: "global-class-name" }}>
-                                    <RiDeleteBinLine/>
-                                    </IconContext.Provider>
-                                 </button>
-                                 </td>
-                             </tr>
-                         </>
-                        ))}
-                    </tbody>
-                </table>
+            {/* Modal for edit transaction*/}
+            <Modal onCancel={() => setVisible(false)} footer={null} open={visible}>
+            <div className='create-transaction w-[300px] lg:mx-10 lg:w-[400px]'>
+                <h1 className='text-2xl font-bold'>Edit Transaction</h1>
+                <div className='transaction-input border-2  border-black mb-10 rounded-lg'>
+                    <form onSubmit={handleEditTransaction} className='p-5 flex flex-col gap-6'>
+                        <input type='number' min='1' className='p-2' placeholder=' Amount' value={editedAmount } onChange={(e) => setEditedAmount(e.target.value)}/>
+                        <input type={'text'} className='p-2' placeholder='Description' value={editedDescription } onChange={(e) => setEditedDescription(e.target.value)}/>
+                        <DatePicker  onChange={(value) => {setNewDate(value)}
+                            } format={dateFormat} />
+                        <Select value={newType} placeholder="Select Transaction type" onChange={(value) => setNewType(value) } options={[{value : "INCOME", label : "Income"}, {
+                            value: "EXPENSE",
+                            label: "Expense"
+                        }]} >
+                            
+                        </Select>
+                        <Select className='category-dropdown'   placeholder='Select Category' onChange={(value) => setNewCategory(value) }  >
+                            {categories?.map((c) => (
+                                <Option value={c._id} key={c._id}>{c.title}</Option>
+                            ))}
+                        </Select>
+                        <button type='submit' className='bg-black px-4 py-2 rounded-lg text-white'>EDIT</button>
+                    </form>
 
-               </div>
-            </div> */}
+                </div>
 
+            </div>
+            </Modal>
         </div>
 
      </Layout>
