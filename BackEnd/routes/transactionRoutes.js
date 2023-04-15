@@ -1,5 +1,5 @@
 import express from "express";
-import { createTransaction, deleteTransaction, getAllTransactionsOfUser, getAllTransactionsOfUserUnderCat, updateTransaction } from "../controllers/transactionController.js";
+import { createTransaction, deleteTransaction, getAllTransactionsOfUser, getAllTransactionsOfUserUnderCat, updateTransaction,getCategoriesAndAmountForMonthExpense, getCategoriesAndAmountExpense } from "../controllers/transactionController.js";
 import {isLoggedIn} from '../middlewares/auth.middleware.js'
 import formidable from 'express-formidable'
 const router = express.Router();
@@ -13,5 +13,8 @@ router.post('/update-transaction/:id', isLoggedIn,formidable(), updateTransactio
 router.get('/transactions', isLoggedIn, getAllTransactionsOfUser)
 // get all transactions under a cat
 router.get('/category-transactions', isLoggedIn, getAllTransactionsOfUserUnderCat)
-
+// get categories sum for month
+router.get('/category-sum', isLoggedIn, getCategoriesAndAmountForMonthExpense)
+// get categories total sum
+router.get('/category-totalsum', isLoggedIn, getCategoriesAndAmountExpense)
 export default router

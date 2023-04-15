@@ -158,3 +158,123 @@ export const getAllTransactionsOfUserUnderCat = asyncHandler(async(req, res) => 
         })
     }
 })
+/*
+* @get transactions sum  category wise for selected month
+* @route : /api/v1/transaction/category-sum/
+* @description :  controller for updating
+  
+ * @Parametes {month}
+ @ returns returns [{name: 'category', value: sum of amounts of category}]
+ */
+export const getCategoriesAndAmountForMonthExpense = asyncHandler(async (req, res) => {
+    console.log(req.params);
+    try{
+        const {userId,month} = req.params
+        if(!userId){
+            throw new CustomError("User Id is required")
+        }
+        //if(!month){
+        //const allTransactionsOfUser = await Transaction.find({userId}).populate('categoryId')
+        //}
+        //else{}
+            const formattedMonth = parseInt(month);
+            const allTransactionsOfUser = await Transaction.find({userId,date: { 
+                $gte: new Date(`${formattedMonth}/01/2023`), // First day of the selected month
+                $lt: new Date(`${formattedMonth+1}/01/2023`) // First day of the next month
+              },type: 'EXPENSE',}).populate('categoryId') 
+        
+        if(!allTransactionsOfUser){
+            throw new CustomError("Unable to get all transaction")
+        }
+        // creating data points
+        const datapoints = [];
+        const temp = {};
+
+        allTransactionsOfUser.forEach(transaction => {
+        const { amount, categoryId: { title } } = transaction;
+        if (!temp[title]) {
+            temp[title] = {
+            name: title,
+            value: Number(amount),
+            };
+        } else {
+            temp[title].value += Number(amount);
+        }
+        });
+
+        for (const title in temp) {
+        datapoints.push(temp[title]);
+        }
+
+
+        //
+        res.status(200).json({
+            success : true,
+            message: "sending datapoints",
+            datapoints
+
+        })
+    } catch(error){
+        console.log(error);
+        res.status(500).json({
+            success: false,
+            message : "Error in getCategoriesAndAmountForMonth"
+        })
+
+    }
+})
+/*
+* @get total transactions sum  category wise 
+* @route : /api/v1/transaction/category-totalsum/
+* @description :  
+    gives an array that contains categories and total amount under category 
+ * @Parametes 
+ @ returns returns [{name: 'category', value: sum of amounts of category}]
+ */
+ export const getCategoriesAndAmountExpense = asyncHandler(async (req, res) => {
+    console.log(req.body);
+    try{
+        const {userId} = req.body
+        if(!userId){
+            throw new CustomError("User Id is required")
+        }
+        const allTransactionsOfUser = await Transaction.find({userId,type: 'EXPENSE',}).populate('categoryId') 
+        
+        if(!allTransactionsOfUser){
+            throw new CustomError("Unable to get all transaction")
+        }
+        // creating data points
+        const datapoints = [];
+        const temp = {};
+
+        allTransactionsOfUser.forEach(transaction => {
+        const { amount, categoryId: { title } } = transaction;
+        if (!temp[title]) {
+            temp[title] = {
+            name: title,
+            value: Number(amount),
+            };
+        } else {
+            temp[title].value += Number(amount);
+        }
+        });
+
+        for (const title in temp) {
+        datapoints.push(temp[title]);
+        }
+        //
+        res.status(200).json({
+            success : true,
+            message: "sending datapoints",
+            datapoints
+
+        })
+    } catch(error){
+        console.log(error);
+        res.status(500).json({
+            success: false,
+            message : "Error in getCategoriesAndAmountForExpense"
+        })
+
+    }
+})
