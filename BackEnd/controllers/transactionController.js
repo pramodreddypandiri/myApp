@@ -77,7 +77,7 @@ export const updateTransaction = asyncHandler(async (req, res) => {
     try{
         const {id} = req.params
         const fieldsToUpdate = { ...req.fields };
-        console.log(fieldsToUpdate);
+        //console.log(fieldsToUpdate);
         if(!id){
             throw new CustomError("Id is required")
         }
@@ -100,7 +100,7 @@ export const updateTransaction = asyncHandler(async (req, res) => {
 })
 /*
 * @getAll transactions
-* @route : /api/v1/transaction/transactions
+* @route : /api/v1/transaction/transactions/userId:
 * @description :  controller for fetching all transactions of a user
  * @Parametes {userId}
  @ returns success message all trxnxs

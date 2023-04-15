@@ -118,6 +118,7 @@ const CreateTransaction = () => {
             toast.error("Error in get All Transactions")
         }
     }
+    //console.log(allTransactionsOfUser);
     //Edit 
     const handleEditTransaction = async (e) => {
         e.preventDefault()
@@ -148,7 +149,7 @@ const CreateTransaction = () => {
     },[])
   return (
      <Layout title={"Transactions - MyApp"}>
-        <div className='container mx-auto flex flex-col lg:flex-row overflow-y-scroll items-center lg:items-start '>
+        <div className='container mx-auto flex flex-col lg:flex-row  items-center lg:items-start '>
             <div className='create-transaction w-[300px] lg:mx-10 lg:w-[400px]'>
                 <h1 className='text-2xl font-bold'>Create Transaction</h1>
                 <div className='transaction-input border-2  border-black mb-10 rounded-lg'>
@@ -174,7 +175,7 @@ const CreateTransaction = () => {
                 </div>
 
             </div>
-            <div className='recent-trasactions-cards  overflow-y-scroll'>
+            <div className='recent-trasactions-cards min-h-full '>
                 <h1 className='text-2xl text-center font-bold'>Recent Transactions</h1> 
                 <div className='cards-section flex flex-row flex-wrap'>
                     {allTransactionsOfUser?.map((tx) =>(

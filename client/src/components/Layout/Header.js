@@ -53,7 +53,7 @@ const Header = () => {
           <NavLink to={`/manage/settings/create-category`}>
              <li  className={`item font-normal hover:text-blue-600 cursor-pointer uppercase ml-5`} key={"manage"}>Manage</li>
           </NavLink>
-          <NavLink to={`/analytics/${auth.user.role === "ADMIN" ? 'admin' : 'user'}`}>
+          <NavLink to={`/analytics/dashboard`}>
              <li  className={`item font-normal hover:text-blue-600 cursor-pointer uppercase ml-5`} key={"analytics"}>Analytics</li>
           </NavLink>
           
@@ -92,7 +92,7 @@ const Header = () => {
           <NavLink to={`/manage/settings/create-category`}>
              <li  className={`item font-normal hover:text-blue-600 cursor-pointer uppercase ml-5`} key={"manage"}>Manage</li>
           </NavLink>
-          <NavLink to={`/analytics`}>
+          <NavLink to={`/analytics/dashboard`}>
              <li  className={`item font-normal hover:text-blue-600 cursor-pointer uppercase ml-5`} key={"analytics"}>Analytics</li>
           </NavLink>
         </>

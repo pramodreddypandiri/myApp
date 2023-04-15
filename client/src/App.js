@@ -38,7 +38,8 @@ function App() {
         </Route>
         
         <Route path="/analytics" element={<AdminRoute/>}>
-           <Route  path='admin' element={<AdminDashboard/>} /> 
+           <Route  path='dashboard' element={<Dashboard/>} /> 
+           
         </Route>
         
         <Route exact="true" path='/contact' element={<Contact/>}/>
