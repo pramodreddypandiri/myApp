@@ -167,9 +167,9 @@ export const getAllTransactionsOfUserUnderCat = asyncHandler(async(req, res) => 
  @ returns returns [{name: 'category', value: sum of amounts of category}]
  */
 export const getCategoriesAndAmountForMonthExpense = asyncHandler(async (req, res) => {
-    console.log(req.params);
+    console.log(req.query);
     try{
-        const {userId,month} = req.params
+        const {userId,month} = req.query
         if(!userId){
             throw new CustomError("User Id is required")
         }
@@ -210,7 +210,7 @@ export const getCategoriesAndAmountForMonthExpense = asyncHandler(async (req, re
         //
         res.status(200).json({
             success : true,
-            message: "sending datapoints",
+            message: "sending month datapoints",
             datapoints
 
         })
@@ -224,21 +224,21 @@ export const getCategoriesAndAmountForMonthExpense = asyncHandler(async (req, re
     }
 })
 /*
-* @get total transactions sum  category wise 
-* @route : /api/v1/transaction/category-totalsum/
+* @get total transactions sum  category wise income/expense
+* @route : /api/v1/transaction/category-totalsum
 * @description :  
     gives an array that contains categories and total amount under category 
  * @Parametes 
  @ returns returns [{name: 'category', value: sum of amounts of category}]
  */
  export const getCategoriesAndAmountExpense = asyncHandler(async (req, res) => {
-    console.log(req.body);
+    
     try{
-        const {userId} = req.body
+        const {userId, type} = req.query
         if(!userId){
             throw new CustomError("User Id is required")
         }
-        const allTransactionsOfUser = await Transaction.find({userId,type: 'EXPENSE',}).populate('categoryId') 
+        const allTransactionsOfUser = await Transaction.find({userId,type: type,}).populate('categoryId') 
         
         if(!allTransactionsOfUser){
             throw new CustomError("Unable to get all transaction")
@@ -265,7 +265,7 @@ export const getCategoriesAndAmountForMonthExpense = asyncHandler(async (req, re
         //
         res.status(200).json({
             success : true,
-            message: "sending datapoints",
+            message: "sending total datapoints",
             datapoints
 
         })
