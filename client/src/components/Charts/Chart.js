@@ -18,9 +18,9 @@ const getExpenseData = async () => {
   try{
      const {data} = await axios.get('/api/v1/transaction/category-totalsum', {params : {userId : userid, type: 'EXPENSE'}})
      if(data?.success){
-       console.log(data);
+       //console.log(data);
        setDataPointsExpense(data?.datapoints)
-        console.log("total points" + dataPointsExpense);
+        //console.log("total points" + dataPointsExpense);
 
      }
   } catch(error){
@@ -33,9 +33,9 @@ const getIncomeData = async() => {
   try {
     const {data} = await axios.get('/api/v1/transaction/category-totalsum', {params : {userId : userid, type: 'INCOME'}})
     if(data?.success){
-      console.log(data);
+      //console.log(data);
       setDataPointsIncome(data?.datapoints)
-       console.log("total points" + dataPointsExpense);
+       //console.log("total points" + dataPointsExpense);
 
     }
   } catch (error) {
