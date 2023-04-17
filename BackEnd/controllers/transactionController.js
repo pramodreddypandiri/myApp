@@ -3,6 +3,7 @@ import asyncHandler from '../services/asyncHandler.js'
 import CustomError from '../utils/customError.js'
 import fs from 'fs'
 import { threadId } from 'worker_threads'
+import { Configuration, OpenAIApi } from "openai";
 /*
 * @Create Transaction
 * @route : /api/transaction/v1/create-transaction
@@ -277,4 +278,45 @@ export const getCategoriesAndAmountForMonthExpense = asyncHandler(async (req, re
         })
 
     }
+})
+
+/*
+* @get suggestions based on trasaction history
+* @route : /api/v1/transaction/get-suggestion
+* @description :  
+   takes trasactions of a user and returns feedback/insights
+ * @Parametes userId
+ @ returns string of hundred words
+ */
+export const getSuggestions = asyncHandler(async (req, res) =>{
+    try{
+        const {userId} = req.query
+        console.log(userId);
+        if(!userId){
+            throw new CustomError("User Id is required")
+        }
+        const allTransactionsOfUser = await Transaction.find({ userId}).populate('categoryId')
+        if(!allTransactionsOfUser){
+            throw new CustomError("Unable to get all transaction")
+        }
+        const input = `I am giving you an array of objects which are records of a user expenses and income, i want you to analyze those give insights or feedback to spend money wisely. here is records, ${allTransactionsOfUser}`
+        const configuration = new Configuration({
+            apiKey: process.env.OPENAI_API_KEY,
+        });
+        const openai = new OpenAIApi(configuration);
+        const generateResponse = async (input) => {
+            const response = await openai.createCompletion({
+              model: 'davinci',
+              prompt : input, 
+              max_tokens: 100,
+              temperature: 0.5,
+              n: 1
+            })
+             console.log(response);
+          }
+          generateResponse(input)
+    } catch(error){
+        console.log(error);
+    }
+
 })
