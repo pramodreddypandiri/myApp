@@ -12,6 +12,7 @@ const Tips = () => {
     console.log('getAiFeedback');
     try {
         const {data} = await axios.get('/api/v1/transaction/get-suggestion',{params : {userId : userId}})
+        console.log('Data ' + data);
         if(data?.success){
           toast.success("success")
         }

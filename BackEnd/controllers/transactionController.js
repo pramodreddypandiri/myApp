@@ -4,6 +4,7 @@ import CustomError from '../utils/customError.js'
 import fs from 'fs'
 import { threadId } from 'worker_threads'
 import { Configuration, OpenAIApi } from "openai";
+import { error } from 'console'
 /*
 * @Create Transaction
 * @route : /api/transaction/v1/create-transaction
@@ -112,7 +113,7 @@ export const getAllTransactionsOfUser = asyncHandler(async (req, res) => {
         if(!userId){
             throw new CustomError("User Id is required")
         }
-        const allTransactionsOfUser = await Transaction.find({ userId}).populate('categoryId')
+        const allTransactionsOfUser = await Transaction.find({ userId}).populate('categoryId').sort({date: 'desc'})
         if(!allTransactionsOfUser){
             throw new CustomError("Unable to get all transaction")
         }
@@ -304,19 +305,29 @@ export const getCategoriesAndAmountForMonthExpense = asyncHandler(async (req, re
 //             apiKey: process.env.OPENAI_API_KEY,
 //         });
 //         const openai = new OpenAIApi(configuration);
-//         const generateResponse = async (input) => {
-//             const response = await openai.createCompletion({
+//         const response = await openai.createCompletion({
 //               model: 'davinci',
 //               prompt : input, 
 //               max_tokens: 100,
 //               temperature: 0.5,
 //               n: 1
 //             })
-//              console.log(response);
-//           }
-//           generateResponse(input)
+//         if(!response){
+//             throw new CustomError("NO response from openaiapi")
+//         } 
+//         console.log(response);
+//         res.status(200).json({
+//             success: true,
+//             message: 'got response from openai api',
+//             response
+//         })
+          
 //     } catch(error){
 //         console.log(error);
+//         res.status(500).json({
+//             success: false,
+//             message: "Something went wrong in getSuggestions"
+//         })
 //     }
 
 // })

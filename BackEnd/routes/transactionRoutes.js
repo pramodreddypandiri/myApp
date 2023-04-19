@@ -1,5 +1,5 @@
 import express from "express";
-import { createTransaction, deleteTransaction, getAllTransactionsOfUser, getAllTransactionsOfUserUnderCat, updateTransaction,getCategoriesAndAmountForMonthExpense, getCategoriesAndAmountExpense, } from "../controllers/transactionController.js";
+import { createTransaction, deleteTransaction, getAllTransactionsOfUser, getAllTransactionsOfUserUnderCat, updateTransaction,getCategoriesAndAmountForMonthExpense, getCategoriesAndAmountExpense,  } from "../controllers/transactionController.js";
 import {isLoggedIn} from '../middlewares/auth.middleware.js'
 import formidable from 'express-formidable'
 const router = express.Router();

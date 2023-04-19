@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import Layout from '../../components/Layout/Layout'
 import axios from 'axios'
 import { toast } from 'react-hot-toast'
+import { NavLink } from 'react-router-dom'
 import { useAuth } from '../../context/auth'
 import { Select } from 'antd'
 import { DatePicker, Space } from 'antd';
@@ -23,6 +24,8 @@ const CreateTransaction = () => {
     const [type, setType] = useState("EXPENSE")
     const [auth, setAuth] = useAuth();
     const [allTransactionsOfUser, setAllTransactionsOfUser] = useState()
+    const [limitedTransactions, setLimitedTransactions] = useState()
+
     //Edit modal
     const [visible , setVisible] = useState(false)
     const [editedAmount,setEditedAmount] = useState()
@@ -107,6 +110,7 @@ const CreateTransaction = () => {
             const{ data } = await axios.get('/api/v1/transaction/transactions', {params : {userId : userId}})
             if (data?.success){
                 setAllTransactionsOfUser(data?.allTransactionsOfUser)
+                setLimitedTransactions(data?.allTransactionsOfUser.slice(0,10))
                 //console.log(data?.allTransactionsOfUser);
             }
             else{
@@ -175,10 +179,11 @@ const CreateTransaction = () => {
                 </div>
 
             </div>
-            <div className='recent-trasactions-cards min-h-full '>
+            <div className='recent-trasactions-cards'>
                 <h1 className='text-2xl text-center font-bold'>Recent Transactions</h1> 
                 <div className='cards-section flex flex-row flex-wrap'>
-                    {allTransactionsOfUser?.map((tx) =>(
+                    {
+                    limitedTransactions?.map((tx) =>(
                         <div className="w-full my-5 mx-2 border-l-2 border-b-2 border-black border-solid relative max-w-md  bg-white rounded-lg   shadow-lg overflow-hidden">
                         <div className=" flex  w-full ">
                             <div className='date absolute  top-0 right-0'>
@@ -208,6 +213,9 @@ const CreateTransaction = () => {
                     ))}
                 
                 </div>
+                <NavLink to={`/myhome/all-transactions`}>
+               <p className='text-blue-800 text-center' >See All Transactions</p>
+          </NavLink>
 
             </div>
             {/* Modal for edit transaction*/}
