@@ -7,7 +7,11 @@ const HomePage = () => {
 
   return (
     <Layout title={'Welcome'}>
-        <h1> Home Page</h1>
+        <div className='container flex mx-auto'>
+          <div>
+            <p></p>
+          </div>
+        </div>
         
     </Layout>
   )
