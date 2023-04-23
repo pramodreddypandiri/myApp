@@ -41,9 +41,9 @@ const Login = () => {
     }
   return (
     <Layout title={"Log in - My App "}>
-    <div className='register flex flex-col items-center justify-center m-20'>
-        <div className='register-title-div m-10'>
-           <h1 className='register-title text-2xl md:text-4xl'>Login</h1>
+    <div className='login flex flex-col items-center justify-center m-20'>
+        <div className='login-title-div m-10'>
+           <h1 className='login-title text-2xl md:text-4xl'>Login</h1>
         </div>
         <form onSubmit={handleLoginSubmit} className='w-[300px] md:w-[350px] flex flex-col items-center gap-5'>
             <div className='user-email w-full'>

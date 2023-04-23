@@ -2,10 +2,8 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useAuth } from '../../context/auth'
 import axios from 'axios'
-import { toast } from 'react-hot-toast'
-import { Select } from 'antd'
-import { PieChart, Pie, Cell, Tooltip } from 'recharts';
-const {Option} = Select
+import { PieChart, Pie, Tooltip } from 'recharts';
+
 const Chart = () => {
   const [auth, setAuth] = useAuth()
   const userid = auth?.user?._id
@@ -48,7 +46,8 @@ useEffect(() => {
 },[])
   return (
     <div className='flex flex-col lg:flex-row'>
-      <PieChart width={400} height={400}>
+      {dataPointsExpense ? (<div>
+        <PieChart width={400} height={400}>
       <Pie
         data={dataPointsExpense}
         cx={200}
@@ -64,7 +63,9 @@ useEffect(() => {
       </Pie>
       <Tooltip />
     </PieChart>
+    </div>) : (<div>No Expenditure data to show</div>)}
     {/* Income */}
+    {dataPointsIncome ? (
     <PieChart width={400} height={400}>
       <Pie
         data={dataPointsIncome}
@@ -80,7 +81,7 @@ useEffect(() => {
         
       </Pie>
       <Tooltip />
-    </PieChart>
+    </PieChart>) : (<div>No Income data to show</div>)}
     <div className='suggestions'>
 
     </div>
