@@ -27,4 +27,4 @@ router.get("/admin-auth", isLoggedIn,isAdmin, (req, res) => {
     res.status(200).send({ok: true})
 })
 
-export default router
+export default router;

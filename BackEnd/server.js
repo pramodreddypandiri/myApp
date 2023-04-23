@@ -6,6 +6,7 @@ import configs from "../BackEnd/config/index.js"
 import authRoutes from './routes/authRoutes.js'
 import categoryRoutes from './routes/categoryRoutes.js'
 import transactionRoutes from './routes/transactionRoutes.js'
+import contactRoutes from './routes/contactRoutes.js'
 import cookieParser from "cookie-parser"
 import cors from 'cors'
 
@@ -28,6 +29,7 @@ app.use(morgan('dev'))
 app.use('/api/v1/auth', authRoutes)
 app.use('/api/v1/category', categoryRoutes)
 app.use('/api/v1/transaction', transactionRoutes)
+app.use('/api/v1/contact', contactRoutes)
 //PORT
 const PORT = configs.PORT
 
