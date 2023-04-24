@@ -7,11 +7,38 @@ import { toast } from 'react-hot-toast'
 import {BiEdit} from 'react-icons/bi';
 import {RiDeleteBinLine} from 'react-icons/ri'
 import { IconContext } from "react-icons";
+import { Select } from 'antd'
+import { DatePicker, Space } from 'antd';
+import {Modal} from 'antd';
+const {Option} = Select
 const AllTransactions = () => {
-
+    // for date formatting, for using in edit transaction modal
+    const options = { month: '2-digit', day: '2-digit', year: 'numeric' };
+    const currDate = new Date()
+    const formattedDate = new Date().toLocaleDateString('en-US',options).toString()
+    const dateFormat = 'MM/DD/YYYY'; 
     const [allTransactionsOfUser, setAllTransactionsOfUser] = useState()
+    const [searchTerm, setSearchTerm] = useState()
+    const [filteredTransactions, setFilteredTransactions] = useState()
+    const [categories, setCategories] = useState()
     const [auth, setAuth] = useAuth();
+     //Edit modal
+     const [visible , setVisible] = useState(false)
+     const [editedAmount,setEditedAmount] = useState()
+     const [editedDescription,setEditedDescription] = useState()
+     const [newDate, setNewDate] = useState()
+     const [newType, setNewType] = useState()
+     const [newCategory, setNewCategory] = useState()
+     const [seletedTransaction, setSelectedTransaction] = useState()
     const userId = auth?.user?._id
+    // filter transactions
+    const filterTransactions = () => {
+        const searchInput = 'oo'
+        const filtered_Transactions = allTransactionsOfUser.filter(transaction =>
+            transaction.description.toLowerCase().includes(searchInput.toLowerCase())
+          );
+          setFilteredTransactions(filtered_Transactions)
+    }
     // get all transactions of user
     const getAllTransactionsOfUser = async () => {
         //console.log(userId);
@@ -20,6 +47,7 @@ const AllTransactions = () => {
             if (data?.success){
                 setAllTransactionsOfUser(data?.allTransactionsOfUser)
                 //console.log(data?.allTransactionsOfUser);
+                //filterTransactions()
             }
             else{
                 toast.error("Something went wrong in fecthing transactions")
@@ -33,7 +61,7 @@ const AllTransactions = () => {
     // method to delete transaction 
     const handleDeleteTransaction = async(id) => {
         try{
-            const {data} = await axios.post(`api/v1/transaction/delete-transaction/${id}`)
+            const {data} = await axios.post(`/api/v1/transaction/delete-transaction/${id}`)
             if (data?.success){
                 toast.success(data?.message)
                 getAllTransactionsOfUser()
@@ -46,9 +74,53 @@ const AllTransactions = () => {
             toast.error("Something Went ")
         }
     }
+    //Edit 
+    const handleEditTransaction = async (e) => {
+        e.preventDefault()
+        try{
+            const editedTransactionData = new FormData()
+            editedTransactionData.append("amount", editedAmount)
+            editedTransactionData.append("description", editedDescription)
+            editedTransactionData.append("type", newType)
+            editedTransactionData.append("date", newDate)
+            editedTransactionData.append("categoryId", newCategory)
+            const {data} = await axios.post(`/api/v1/transaction/update-transaction/${seletedTransaction}`, editedTransactionData)
+            if(data?.success){
+                toast.success("Updated Successfully")
+                getAllTransactionsOfUser()
+                setVisible(false)
+            }
+            else{
+                toast.error("Something went wrong")
+            }
+        } catch(error){
+            console.log(error);
+        }
+
+    }
+    // method to fetch all user categories
+    const getAllCategories = async () => {
+        
+        //console.log(typeof(userId));
+         //console.log(userId)
+        try{
+            const {data} = await axios.get('/api/v1/category/categories', {params: { userId }})
+            if(data?.success){
+                //console.log(data?.allCatOfUser);
+                setCategories(data?.allCatOfUser)
+                 //console.log(categories);
+                 
+            }
+        } catch(error){
+            console.log(error);
+            toast.error("Something went wrong")
+        }
+        
+    }
     useEffect( () => {
-       //getAllCategories();
+       getAllCategories();
        getAllTransactionsOfUser()
+       
     },[])
   return (
     <Layout title={"All Transactios - MyApp"}>
@@ -71,11 +143,11 @@ const AllTransactions = () => {
                                 <p className="text-gray-700 mb-2 font-semibold truncate uppercase">{tx?.categoryId?.title}</p>
                             </div>
                             <div className="actions flex mt-5 flex-col gap-5">
-                                <IconContext.Provider value={{ color: "black", className: "global-class-name" }}>
-                                <BiEdit/>
+                            <IconContext.Provider value={{ color: "black", className: "global-class-name" }}>
+                                <BiEdit onClick={()=> {setVisible(true); setSelectedTransaction(tx._id); setEditedAmount(tx.amount); setEditedDescription(tx.description); setNewDate(tx.date); setNewType(tx.type); setNewCategory(tx?.categoryId?.title)}} className='cursor-pointer'/>
                                 </IconContext.Provider>
                                 <IconContext.Provider value={{ color: "red", className: "global-class-name" }}>
-                                <RiDeleteBinLine/>
+                                <RiDeleteBinLine className='cursor-pointer' onClick={() => handleDeleteTransaction(tx._id)}/>
                                 </IconContext.Provider>
                                 
                            </div>
@@ -86,6 +158,34 @@ const AllTransactions = () => {
                     ))}
                 
                 </div>
+                {/* Modal for edit transaction*/}
+            <Modal onCancel={() => setVisible(false)} footer={null} open={visible}>
+            <div className='create-transaction w-[300px] lg:mx-10 lg:w-[400px]'>
+                <h1 className='text-2xl font-bold'>Edit Transaction</h1>
+                <div className='transaction-input border-2  border-black mb-10 rounded-lg'>
+                    <form onSubmit={handleEditTransaction} className='p-5 flex flex-col gap-6'>
+                        <input type='number' min='1' className='p-2' placeholder=' Amount' value={editedAmount } onChange={(e) => setEditedAmount(e.target.value)}/>
+                        <input type={'text'} className='p-2' placeholder='Description' value={editedDescription } onChange={(e) => setEditedDescription(e.target.value)}/>
+                        <DatePicker  onChange={(value) => {setNewDate(value)}
+                            } format={dateFormat} />
+                        <Select value={newType} placeholder="Select Transaction type" onChange={(value) => setNewType(value) } options={[{value : "INCOME", label : "Income"}, {
+                            value: "EXPENSE",
+                            label: "Expense"
+                        }]} >
+                            
+                        </Select>
+                        <Select className='category-dropdown'   placeholder='Select Category' onChange={(value) => setNewCategory(value) }  >
+                            {categories?.map((c) => (
+                                <Option value={c._id} key={c._id}>{c.title}</Option>
+                            ))}
+                        </Select>
+                        <button type='submit' className='bg-black px-4 py-2 rounded-lg text-white'>EDIT</button>
+                    </form>
+
+                </div>
+
+            </div>
+            </Modal>
 
             </div>
     </Layout>

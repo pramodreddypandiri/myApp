@@ -71,7 +71,7 @@ const CreateTransaction = () => {
     // method to delete transaction 
     const handleDeleteTransaction = async(id) => {
         try{
-            const {data} = await axios.post(`api/v1/transaction/delete-transaction/${id}`)
+            const {data} = await axios.post(`/api/v1/transaction/delete-transaction/${id}`)
             if (data?.success){
                 toast.success(data?.message)
                 getAllTransactionsOfUser()
