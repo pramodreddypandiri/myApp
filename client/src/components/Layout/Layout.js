@@ -3,8 +3,24 @@ import Footer from './Footer'
 import Header from './Header'
 import {Helmet} from 'react-helmet'
 import { Toaster } from 'react-hot-toast';
+import { useLocation } from "react-router-dom";
 
 const Layout = ({children,description, keywords, title,author}) => {
+  const location = useLocation();
+  const currentUrl = location.pathname;
+  let activeHome;
+  let activeSignup;
+  let activeLogin;
+  let activeMyHome ;
+  let activeManage;
+  let activeAnalytics;
+  console.log(currentUrl);
+  if(currentUrl.includes("myhome")) { activeMyHome = true;}
+  else if(currentUrl.includes("manage")) { activeManage = true;}
+  else if(currentUrl.includes("analytics")) { activeAnalytics = true;}
+  else if(currentUrl.includes("signup")) { activeSignup = true;}
+  else if(currentUrl.includes("login")) { activeLogin = true;}
+  else if(currentUrl === '/') { activeHome = true;}
   return (
     <div>
          <Helmet>
@@ -16,7 +32,7 @@ const Layout = ({children,description, keywords, title,author}) => {
                 <title>{title}</title>
                 
             </Helmet>
-        <Header/>
+        <Header activeLogin={activeLogin} activeHome ={activeHome} activeSignup ={activeSignup} activeMyHome= {activeMyHome} activeManage={activeManage} activeAnalytics={activeAnalytics}/>
           <main className='overflow-y-scroll'>
           <Toaster />
              {children}

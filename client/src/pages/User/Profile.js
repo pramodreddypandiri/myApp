@@ -6,7 +6,7 @@ import ManageMenu from '../../components/Layout/ManageMenu'
 import { useAuth } from '../../context/auth'
 const Profile = () => {
     const [auth, setAuth] = useAuth()
-    console.log(auth);
+    //console.log(auth);
     const [name, setEditedName] = useState(auth?.user?.name)
     const [email, setEditedEmail] = useState(auth?.user?.email)
     const [profession, setProfession] = useState(auth?.user?.profession)
@@ -18,7 +18,7 @@ const Profile = () => {
       try{
         const res  = await axios.post(`/api/v1/auth/update-profile/${auth?.user?._id}`,{name, email, profession, income})
         if(res && res?.data?.success){
-          console.log(res?.data);
+          //console.log(res?.data);
           toast.success("Profile Updated")
           
         }
@@ -31,7 +31,7 @@ const Profile = () => {
     <Layout title={'Manage - My Profile'}>
         <div className='flex w-ull flex-col  lg:flex-row '>
             <div className=''>
-                 <ManageMenu />
+                 <ManageMenu category={false} profile={true} />
             </div>
             <div className='lg:ml-10 p-2 lg:mt-10'>
                 <h4 className='text-2xl font-bold'>My Profile</h4>
