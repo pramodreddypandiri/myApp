@@ -13,9 +13,10 @@ import {RiDeleteBinLine} from 'react-icons/ri'
 import { IconContext } from "react-icons";
 const {Option} = Select
 const CreateTransaction = () => {
-    const options = { month: '2-digit', day: '2-digit', year: 'numeric' };
+    const options = { day: '2-digit',month: '2-digit',year: 'numeric' };
     const currDate = new Date()
-    const formattedDate = new Date().toLocaleDateString('en-US',options).toString()
+    const formattedDate = new Date().toLocaleDateString('en-GB',options).toString()
+    //console.log("formatted Date" , typeof formattedDate);
     const [categories, setCategories] = useState()
     const [category, setCategory] = useState()
     const [amount, setAmount] = useState()
@@ -34,9 +35,9 @@ const CreateTransaction = () => {
     const [newType, setNewType] = useState()
     const [newCategory, setNewCategory] = useState()
     const [seletedTransaction, setSelectedTransaction] = useState()
-     
+    const [existingDate, setExistingDate] = useState()
     const userId = auth?.user?._id
-    const dateFormat = 'MM/DD/YYYY';
+    const dateFormat = 'DD/MM/YYYY';
     //console.log(userId);
     //console.log(currDate.toString());
     //create transaction method
@@ -57,6 +58,10 @@ const CreateTransaction = () => {
                     //update all transactions
                     getAllTransactionsOfUser()
                     //make all fields to empty/default
+                    setAmount("")
+                    setDescription("")
+                    setDate(currDate)
+                    setType("EXPENSE")
                     
 
                 }
@@ -147,6 +152,7 @@ const CreateTransaction = () => {
         }
 
     }
+    console.log("existing date " + existingDate);
     useEffect( () => {
        getAllCategories();
        getAllTransactionsOfUser()
@@ -162,13 +168,13 @@ const CreateTransaction = () => {
                         <input type={'text'} className='p-2' placeholder='Description' value={description } onChange={(e) => setDescription(e.target.value)}/>
                         <DatePicker  onChange={(value) => {setDate(value)}
                             } defaultValue={dayjs(formattedDate, dateFormat)} format={dateFormat} />
-                        <Select bordered={false} placeholder="Select Transaction type" onChange={(value) => setType(value) } options={[{value : "INCOME", label : "Income"}, {
+                        <Select value={type} bordered={false} placeholder="Select Transaction type" onChange={(value) => setType(value) } options={[{value : "INCOME", label : "Income"}, {
                             value: "EXPENSE",
                             label: "Expense"
                         }]} >
                             
                         </Select>
-                        <Select className='category-dropdown' bordered={false}  placeholder='Select Category' onChange={(value) => setCategory(value) }  >
+                        <Select  className='category-dropdown' bordered={false}  placeholder='Select Category' onChange={(value) => setCategory(value) }  >
                             {categories?.map((c) => (
                                 <Option value={c._id} key={c._id}>{c.title}</Option>
                             ))}
@@ -199,7 +205,8 @@ const CreateTransaction = () => {
                             </div>
                             <div className="actions flex mt-5 flex-col gap-5">
                                 <IconContext.Provider value={{ color: "black", className: "global-class-name" }}>
-                                <BiEdit onClick={()=> {setVisible(true); setSelectedTransaction(tx._id); setEditedAmount(tx.amount); setEditedDescription(tx.description); setNewDate(tx.date); setNewType(tx.type); setNewCategory(tx?.categoryId?.title)}} className='cursor-pointer'/>
+                                <BiEdit onClick={()=> {setVisible(true); setSelectedTransaction(tx._id); setEditedAmount(tx.amount); setEditedDescription(tx.description); setNewDate(tx.date);setExistingDate(() => {const 
+                                formattedExistingDate = new Date(tx.date).toLocaleDateString("en-GB"); return formattedExistingDate}); setNewType(tx.type); setNewCategory(tx?.categoryId?.title)}} className='cursor-pointer'/>
                                 </IconContext.Provider>
                                 <IconContext.Provider value={{ color: "red", className: "global-class-name" }}>
                                 <RiDeleteBinLine className='cursor-pointer' onClick={() => handleDeleteTransaction(tx._id)}/>
@@ -226,7 +233,7 @@ const CreateTransaction = () => {
                     <form onSubmit={handleEditTransaction} className='p-5 flex flex-col gap-6'>
                         <input type='number' min='1' className='p-2' placeholder=' Amount' value={editedAmount } onChange={(e) => setEditedAmount(e.target.value)}/>
                         <input type={'text'} className='p-2' placeholder='Description' value={editedDescription } onChange={(e) => setEditedDescription(e.target.value)}/>
-                        <DatePicker  onChange={(value) => {setNewDate(value)}
+                        <DatePicker value={dayjs(existingDate, dateFormat)}  onChange={(value) => {setNewDate(value)}
                             } format={dateFormat} />
                         <Select value={newType} placeholder="Select Transaction type" onChange={(value) => setNewType(value) } options={[{value : "INCOME", label : "Income"}, {
                             value: "EXPENSE",

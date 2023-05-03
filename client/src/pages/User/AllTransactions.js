@@ -10,13 +10,14 @@ import { IconContext } from "react-icons";
 import { Select } from 'antd'
 import { DatePicker, Space } from 'antd';
 import {Modal} from 'antd';
+import dayjs from 'dayjs';
 const {Option} = Select
 const AllTransactions = () => {
     // for date formatting, for using in edit transaction modal
     const options = { month: '2-digit', day: '2-digit', year: 'numeric' };
     const currDate = new Date()
     const formattedDate = new Date().toLocaleDateString('en-US',options).toString()
-    const dateFormat = 'MM/DD/YYYY'; 
+    const dateFormat = 'DD/MM/YYYY'; 
     const [allTransactionsOfUser, setAllTransactionsOfUser] = useState()
     const [searchTerm, setSearchTerm] = useState()
     const [filteredTransactions, setFilteredTransactions] = useState()
@@ -29,6 +30,7 @@ const AllTransactions = () => {
      const [newDate, setNewDate] = useState()
      const [newType, setNewType] = useState()
      const [newCategory, setNewCategory] = useState()
+     const [existingDate, setExistingDate] = useState()
      const [seletedTransaction, setSelectedTransaction] = useState()
     const userId = auth?.user?._id
     // filter transactions
@@ -150,7 +152,8 @@ const AllTransactions = () => {
                             </div>
                             <div className="actions flex mt-5 flex-col gap-5">
                             <IconContext.Provider value={{ color: "black", className: "global-class-name" }}>
-                                <BiEdit onClick={()=> {setVisible(true); setSelectedTransaction(tx._id); setEditedAmount(tx.amount); setEditedDescription(tx.description); setNewDate(tx.date); setNewType(tx.type); setNewCategory(tx?.categoryId?.title)}} className='cursor-pointer'/>
+                                <BiEdit onClick={()=> {setVisible(true); setSelectedTransaction(tx._id); setEditedAmount(tx.amount); setEditedDescription(tx.description); setNewDate(tx.date);setExistingDate(() => {const 
+                                formattedExistingDate = new Date(tx.date).toLocaleDateString("en-GB"); return formattedExistingDate}); setNewType(tx.type); setNewCategory(tx?.categoryId)}} className='cursor-pointer'/>
                                 </IconContext.Provider>
                                 <IconContext.Provider value={{ color: "red", className: "global-class-name" }}>
                                 <RiDeleteBinLine className='cursor-pointer' onClick={() => handleDeleteTransaction(tx._id)}/>
@@ -172,7 +175,7 @@ const AllTransactions = () => {
                     <form onSubmit={handleEditTransaction} className='p-5 flex flex-col gap-6'>
                         <input type='number' min='1' className='p-2' placeholder=' Amount' value={editedAmount } onChange={(e) => setEditedAmount(e.target.value)}/>
                         <input type={'text'} className='p-2' placeholder='Description' value={editedDescription } onChange={(e) => setEditedDescription(e.target.value)}/>
-                        <DatePicker  onChange={(value) => {setNewDate(value)}
+                        <DatePicker value={dayjs(existingDate, dateFormat)}  onChange={(value) => {setNewDate(value)}
                             } format={dateFormat} />
                         <Select value={newType} placeholder="Select Transaction type" onChange={(value) => setNewType(value) } options={[{value : "INCOME", label : "Income"}, {
                             value: "EXPENSE",
@@ -180,9 +183,11 @@ const AllTransactions = () => {
                         }]} >
                             
                         </Select>
-                        <Select className='category-dropdown'   placeholder='Select Category' onChange={(value) => setNewCategory(value) }  >
+                        <Select  className='category-dropdown' placeholder='Select Category' onChange={(value) => setNewCategory(value) }  >
                             {categories?.map((c) => (
-                                <Option value={c._id} key={c._id}>{c.title}</Option>
+                               <Option  value={c._id} key={c._id} selected={c._id === newCategory}>{c.title}</Option>
+                               
+                                
                             ))}
                         </Select>
                         <button type='submit' className='bg-black px-4 py-2 rounded-lg text-white'>EDIT</button>
