@@ -20,7 +20,7 @@ import CreateTransaction from "./pages/User/CreateTransaction.js";
 import AllTransactions from "./pages/User/AllTransactions.js";
 function App() {
   return (
-    <>
+    <div className="min-h-screen">
       <Routes>
         <Route path='/' element={<HomePage/>} />
         <Route path="/myhome" element={<PrivateRoute/>}>
@@ -50,7 +50,7 @@ function App() {
         <Route  path='/*'
         element={<PageNotFound/>} />
       </Routes>
-    </>
+    </div>
   );
 }
 

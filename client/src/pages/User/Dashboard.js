@@ -12,7 +12,7 @@ const Dashboard = () => {
   const userId = auth?.user?._id
   return (
     <Layout>
-        <div className='container mx-auto flex lg:flex-col flex-row '>
+        <div className='container min-h-screen mx-auto flex lg:flex-col flex-row '>
            <Chart/>
            <Tips/>
            {auth?.user?.role === 'ADMIN' && <UsersDetails/>}

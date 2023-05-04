@@ -8,13 +8,14 @@ import { useLocation } from "react-router-dom";
 const Layout = ({children,description, keywords, title,author}) => {
   const location = useLocation();
   const currentUrl = location.pathname;
+  //send active property for making nav-bar active.
   let activeHome;
   let activeSignup;
   let activeLogin;
   let activeMyHome ;
   let activeManage;
   let activeAnalytics;
-  console.log(currentUrl);
+  //console.log(currentUrl);
   if(currentUrl.includes("myhome")) { activeMyHome = true;}
   else if(currentUrl.includes("manage")) { activeManage = true;}
   else if(currentUrl.includes("analytics")) { activeAnalytics = true;}
@@ -22,7 +23,7 @@ const Layout = ({children,description, keywords, title,author}) => {
   else if(currentUrl.includes("login")) { activeLogin = true;}
   else if(currentUrl === '/') { activeHome = true;}
   return (
-    <div>
+    <div className=''>
          <Helmet>
                 <meta charSet="utf-8" />
                 <meta name='description' content={description}></meta>
@@ -33,7 +34,7 @@ const Layout = ({children,description, keywords, title,author}) => {
                 
             </Helmet>
         <Header activeLogin={activeLogin} activeHome ={activeHome} activeSignup ={activeSignup} activeMyHome= {activeMyHome} activeManage={activeManage} activeAnalytics={activeAnalytics}/>
-          <main className='overflow-y-scroll'>
+          <main className=''>
           <Toaster />
              {children}
           </main>
