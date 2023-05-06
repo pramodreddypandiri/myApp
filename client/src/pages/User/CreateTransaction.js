@@ -159,8 +159,8 @@ const CreateTransaction = () => {
     },[])
   return (
      <Layout title={"Transactions - MyApp"}>
-        <div className='container mx-auto flex flex-col lg:flex-row  items-center lg:items-start '>
-            <div className='create-transaction w-[300px] lg:mx-10 lg:w-[400px]'>
+        <div className='container mx-auto flex flex-col lg:flex-row  items-center lg:items-start  min-h-screen '>
+            <div className='create-transaction w-[300px] lg:mx-10'>
                 <h1 className='text-2xl font-bold'>Create Transaction</h1>
                 <div className='transaction-input border-2  border-black mb-10 rounded-lg'>
                     <form onSubmit={handleCreateTransaction} className='p-5 flex flex-col gap-6'>
@@ -199,13 +199,13 @@ const CreateTransaction = () => {
                         
                         <div className="flex flex-row px-6 mt-1 py-4">
                            <div className='details w-[90%]'>
-                                <p className={`text-gray-700 font-bold truncate mb-2 ${tx.type === "INCOME" ? 'text-green-700' : 'text-red-700' }`}>{tx.amount}</p>
-                                <p className="text-gray-700 truncate mb-2" data-tooltip={tx.description}>{tx.description}</p>
+                                <p className={`text-gray-700 font-bold truncate mb-2 ${tx?.type === "INCOME" ? 'text-green-700' : 'text-red-700' }`}>{tx?.amount}</p>
+                                <p className="text-gray-700 truncate mb-2" data-tooltip={tx?.description}>{tx?.description}</p>
                                 <p className="text-gray-700 mb-2 font-semibold truncate uppercase">{tx?.categoryId?.title}</p>
                             </div>
                             <div className="actions flex mt-5 flex-col gap-5">
                                 <IconContext.Provider value={{ color: "black", className: "global-class-name" }}>
-                                <BiEdit onClick={()=> {setVisible(true); setSelectedTransaction(tx._id); setEditedAmount(tx.amount); setEditedDescription(tx.description); setNewDate(tx.date);setExistingDate(() => {const 
+                                <BiEdit onClick={()=> {setVisible(true); setSelectedTransaction(tx._id); setEditedAmount(tx?.amount); setEditedDescription(tx?.description); setNewDate(tx?.date);setExistingDate(() => {const 
                                 formattedExistingDate = new Date(tx.date).toLocaleDateString("en-GB"); return formattedExistingDate}); setNewType(tx.type); setNewCategory(tx?.categoryId?.title)}} className='cursor-pointer'/>
                                 </IconContext.Provider>
                                 <IconContext.Provider value={{ color: "red", className: "global-class-name" }}>
@@ -226,8 +226,8 @@ const CreateTransaction = () => {
 
             </div>
             {/* Modal for edit transaction*/}
-            <Modal onCancel={() => setVisible(false)} footer={null} open={visible}>
-            <div className='create-transaction w-[300px] lg:mx-10 lg:w-[400px]'>
+            <Modal width={400} onCancel={() => setVisible(false)} footer={null} open={visible}>
+            <div className='create-transaction flex  flex-col mx-auto  w-[300px]  '>
                 <h1 className='text-2xl font-bold'>Edit Transaction</h1>
                 <div className='transaction-input border-2  border-black mb-10 rounded-lg'>
                     <form onSubmit={handleEditTransaction} className='p-5 flex flex-col gap-6'>

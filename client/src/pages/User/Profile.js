@@ -29,7 +29,7 @@ const Profile = () => {
     }
   return (
     <Layout title={'Manage - My Profile'}>
-        <div className='flex w-ull flex-col  lg:flex-row '>
+        <div className='flex w-ull flex-col min-h-screen lg:flex-row '>
             <div className=''>
                  <ManageMenu category={false} profile={true} />
             </div>

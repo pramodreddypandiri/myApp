@@ -19,12 +19,12 @@ const Header = (props) => {
     toast.success("Log out Successfull")
   }
   return (
-    <nav className='navbar flex justify-between  items-center h-16 lg:h-20 mx-5'>
+    <nav className='navbar flex justify-between shadow-xl   items-center h-16 lg:h-20 p-5 '>
       {/* Large screen */}
       <div className=''>
         <p className='text-2xl font-bold hover:text-blue-600 cursor-pointer mb-0'>My App</p>
       </div>
-      <ul className='navitems hidden sm:flex justify-end items-center flex-1 '>
+      <ul className='navitems hidden sm:flex justify-end items-center flex-1 mb-0 '>
       {
         !auth.user ? (
           <NavLink to={`/`}>

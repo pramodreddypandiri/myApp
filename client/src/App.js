@@ -20,7 +20,7 @@ import CreateTransaction from "./pages/User/CreateTransaction.js";
 import AllTransactions from "./pages/User/AllTransactions.js";
 function App() {
   return (
-    <div className="min-h-screen">
+    <div className="">
       <Routes>
         <Route path='/' element={<HomePage/>} />
         <Route path="/myhome" element={<PrivateRoute/>}>
@@ -37,7 +37,7 @@ function App() {
            <Route  path='user' element={<Dashboard/>} /> 
         </Route>
         
-        <Route path="/analytics" element={<AdminRoute/>}>
+        <Route path="/analytics" element={<PrivateRoute/>}>
            <Route  path='dashboard' element={<Dashboard/>} /> 
            
         </Route>

@@ -5,7 +5,7 @@ const Manage = () => {
     
   return (
     <Layout title={"Manage - My App"}>
-        <div>
+        <div className='container min-h-screen mx-auto flex'>
            <ManageMenu/>
         </div>
     </Layout>

@@ -11,7 +11,7 @@ const Dashboard = () => {
   const [auth, setAuth] = useAuth()
   const userId = auth?.user?._id
   return (
-    <Layout>
+    <Layout title={'Analytics - My App'}>
         <div className='container min-h-screen mx-auto flex lg:flex-col flex-row '>
            <Chart/>
            <Tips/>

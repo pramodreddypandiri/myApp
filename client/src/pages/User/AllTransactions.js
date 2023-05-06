@@ -11,6 +11,7 @@ import { Select } from 'antd'
 import { DatePicker, Space } from 'antd';
 import {Modal} from 'antd';
 import dayjs from 'dayjs';
+import { NavLink } from 'react-router-dom'
 const {Option} = Select
 const AllTransactions = () => {
     // for date formatting, for using in edit transaction modal
@@ -131,9 +132,11 @@ const AllTransactions = () => {
     },[])
   return (
     <Layout title={"All Transactios - MyApp"}>
-            <div className='all-trasactions-cards flex flex-col items-center '>
+            <div className='container relative mx-auto all-trasactions-cards min-h-screen flex flex-col items-center '>
+               
                 <h1 className='text-2xl text-center font-bold'>All Transactions</h1> 
                 <div className='search-div lg:mb-5 mb-3'><input className='search-transaction p-2 border-2 border-black rounded-lg lg:w-[400px] w-[300px]' placeholder='Search Amount, Description, Category' value={searchTerm} onChange={(e) => {setSearchTerm(e.target.value); filterTransactions(e.target.value)}}/></div>
+                <div className='text-white bg-black p-2 rounded-lg '><NavLink to='/myhome'>Create Transaction</NavLink></div>
                 <div className='cards-section flex flex-row flex-wrap justify-center'>
                     {filteredTransactions?.map((tx) =>(
                         
@@ -147,7 +150,7 @@ const AllTransactions = () => {
                         <div className="flex flex-row px-6 mt-1 py-4">
                            <div className='details w-[90%]'>
                                 <p className={`text-gray-700 font-bold truncate mb-2 ${tx.type === "INCOME" ? 'text-green-700' : 'text-red-700' }`}>{tx.amount}</p>
-                                <p className="text-gray-700 truncate mb-2 ">{tx.description}</p>
+                                <p className="text-gray-700 truncate mb-2 ">{tx?.description}</p>
                                 <p className="text-gray-700 mb-2 font-semibold truncate uppercase">{tx?.categoryId?.title}</p>
                             </div>
                             <div className="actions flex mt-5 flex-col gap-5">
