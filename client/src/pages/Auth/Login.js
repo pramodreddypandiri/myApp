@@ -9,8 +9,13 @@ const Login = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [auth, setAuth] = useAuth()
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate()
     const location = useLocation();
+    //toggle show password
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+      };
     //handle login (submit)
     const handleLoginSubmit = async (e) => {
         e.preventDefault()
@@ -49,8 +54,13 @@ const Login = () => {
             <div className='user-email w-full'>
               <input type={'email'} placeholder="Enter your Email" value={email} onChange={(e) => {setEmail(e.target.value)}} required className='border-2 border-black p-2 rounded-lg w-full'/>
             </div>
-            <div className='user-password w-full'>
-              <input type={'password'} placeholder="Enter password" value={password} onChange={(e) => {setPassword(e.target.value)}} required className='border-2 border-black p-2 rounded-lg w-full'/>
+            <div className='user-password  flex flex-col w-full'>
+              <input  type={showPassword ? 'text' : 'password'} placeholder="Enter password" value={password} onChange={(e) => {setPassword(e.target.value)}} required className='border-2 border-black p-2 rounded-lg w-full'/>
+              <div className='flex mt-2 items-center'>
+              <input className='border-2 border-black p-2 rounded-lg ' type="checkbox" id="showPassword" checked={showPassword}
+        onChange={togglePasswordVisibility}/>
+  <label className='ml-2' for="showPassword">Show password</label>
+            </div>
             </div>
             <div className='w-full'>
                 <button type='submit' className='uppercase w-full text-white bg-black rounded-lg p-2'>Login</button>

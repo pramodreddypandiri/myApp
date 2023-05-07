@@ -7,8 +7,8 @@ import { PieChart, Pie, Tooltip } from 'recharts';
 const Chart = () => {
   const [auth, setAuth] = useAuth()
   const userid = auth?.user?._id
-  const [dataPointsExpense, setDataPointsExpense] = useState()
-  const [dataPointsIncome, setDataPointsIncome] = useState()
+  const [dataPointsExpense, setDataPointsExpense] = useState([])
+  const [dataPointsIncome, setDataPointsIncome] = useState([])
   
 // data for total sum expenses
 const getExpenseData = async () => {
@@ -46,7 +46,7 @@ useEffect(() => {
 },[])
   return (
     <div className='flex flex-col lg:flex-row'>
-      {dataPointsExpense ? (<div>
+      {dataPointsExpense.length > 0 ? (<div>
         <PieChart width={400} height={400}>
       <Pie
         data={dataPointsExpense}
@@ -63,9 +63,9 @@ useEffect(() => {
       </Pie>
       <Tooltip />
     </PieChart>
-    </div>) : (<div>No Expenditure data to show</div>)}
+    </div>) : (<div className='text-xl p-4 m-4'>No Expenditure data to show</div>)}
     {/* Income */}
-    {dataPointsIncome ? (
+    {dataPointsIncome.length > 0 ? (
     <PieChart width={400} height={400}>
       <Pie
         data={dataPointsIncome}
@@ -81,7 +81,7 @@ useEffect(() => {
         
       </Pie>
       <Tooltip />
-    </PieChart>) : (<div>No Income data to show</div>)}
+    </PieChart>) : (<div  className='text-xl p-4 m-4'>No Income data to show</div>)}
     <div className='suggestions'>
 
     </div>

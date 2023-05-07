@@ -4,12 +4,16 @@ import toast  from 'react-hot-toast'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 const Register = () => {
-    
+  const [showPassword, setShowPassword] = useState(false);
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [question, setQuestion] = useState("")
     const navigate = useNavigate()
+    //toggle show password
+    const togglePasswordVisibility = () => {
+      setShowPassword(!showPassword);
+    };
     // form submit function
     const handleRegisterSubmit = async (e) => {
         e.preventDefault()
@@ -44,11 +48,16 @@ const Register = () => {
                   <input type={'email'} placeholder="Email" value={email} onChange={(e) => {setEmail(e.target.value)}} required className='border-2 border-black p-2 rounded-lg w-full'/>
                 </div>
                 <div className='user-password w-full'>
-                  <input type={'password'} placeholder="Password" value={password} onChange={(e) => {setPassword(e.target.value)}} required className='border-2 border-black p-2 rounded-lg w-full'/>
+                  <input  type={showPassword ? 'text' : 'password'} placeholder="Password" value={password} onChange={(e) => {setPassword(e.target.value)}} required className='border-2 border-black p-2 rounded-lg w-full'/>
                 </div>
                 <div className='user-forgotpassword-question w-full'>
                   <input type={'text'} placeholder="Favorite Actor" value={question} onChange={(e) => {setQuestion(e.target.value)}} required className='border-2 border-black p-2 rounded-lg w-full'/>
                 </div>
+                <div className='flex mt-2 items-center'>
+              <input className='border-2 border-black p-2 rounded-lg ' type="checkbox" id="showPassword" checked={showPassword}
+        onChange={togglePasswordVisibility}/>
+  <label className='ml-2' for="showPassword">Show password</label>
+            </div>
                 <div>
                     <button type='submit' className=' w-full uppercase text-white bg-black rounded-lg p-2'>Register</button>
                 </div>
