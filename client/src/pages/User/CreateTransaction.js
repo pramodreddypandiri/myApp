@@ -51,7 +51,7 @@ const CreateTransaction = () => {
                 transactionData.append("date", date)
                 transactionData.append("categoryId", category)
                 transactionData.append("userId", userId)
-                const {data} = await axios.post('/api/v1/transaction/create-transaction',transactionData)
+                const {data} = await axios.post('https://my-money-app.vercel.app/api/v1/transaction/create-transaction',transactionData)
                 //onsole.log(data);
                 if(data?.success){
                     toast.success("Created Transaction")
@@ -76,7 +76,7 @@ const CreateTransaction = () => {
     // method to delete transaction 
     const handleDeleteTransaction = async(id) => {
         try{
-            const {data} = await axios.post(`/api/v1/transaction/delete-transaction/${id}`)
+            const {data} = await axios.post(`https://my-money-app.vercel.app/api/v1/transaction/delete-transaction/${id}`)
             if (data?.success){
                 toast.success(data?.message)
                 getAllTransactionsOfUser()
@@ -95,7 +95,7 @@ const CreateTransaction = () => {
         //console.log(typeof(userId));
          //console.log(userId)
         try{
-            const {data} = await axios.get('/api/v1/category/categories', {params: { userId }})
+            const {data} = await axios.get('https://my-money-app.vercel.app/api/v1/category/categories', {params: { userId }})
             if(data?.success){
                 //console.log(data?.allCatOfUser);
                 setCategories(data?.allCatOfUser)
@@ -112,7 +112,7 @@ const CreateTransaction = () => {
     const getAllTransactionsOfUser = async () => {
         //console.log(userId);
         try{
-            const{ data } = await axios.get('/api/v1/transaction/transactions', {params : {userId : userId}})
+            const{ data } = await axios.get('https://my-money-app.vercel.app/api/v1/transaction/transactions', {params : {userId : userId}})
             if (data?.success){
                 setAllTransactionsOfUser(data?.allTransactionsOfUser)
                 setLimitedTransactions(data?.allTransactionsOfUser.slice(0,10))
@@ -138,7 +138,7 @@ const CreateTransaction = () => {
             editedTransactionData.append("type", newType)
             editedTransactionData.append("date", newDate)
             editedTransactionData.append("categoryId", newCategory)
-            const {data} = await axios.post(`/api/v1/transaction/update-transaction/${seletedTransaction}`, editedTransactionData)
+            const {data} = await axios.post(`https://my-money-app.vercel.app/api/v1/transaction/update-transaction/${seletedTransaction}`, editedTransactionData)
             if(data?.success){
                 toast.success("Updated Successfully")
                 getAllTransactionsOfUser()

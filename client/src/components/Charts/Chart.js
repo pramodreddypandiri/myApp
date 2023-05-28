@@ -14,7 +14,7 @@ const Chart = () => {
 const getExpenseData = async () => {
   
   try{
-     const {data} = await axios.get('/api/v1/transaction/category-totalsum', {params : {userId : userid, type: 'EXPENSE'}})
+     const {data} = await axios.get('https://my-money-app.vercel.app/api/v1/transaction/category-totalsum', {params : {userId : userid, type: 'EXPENSE'}})
      if(data?.success){
        //console.log(data);
        setDataPointsExpense(data?.datapoints)
@@ -29,7 +29,7 @@ const getExpenseData = async () => {
 // data for total sum income
 const getIncomeData = async() => {
   try {
-    const {data} = await axios.get('/api/v1/transaction/category-totalsum', {params : {userId : userid, type: 'INCOME'}})
+    const {data} = await axios.get('https://my-money-app.vercel.app/api/v1/transaction/category-totalsum', {params : {userId : userid, type: 'INCOME'}})
     if(data?.success){
       //console.log(data);
       setDataPointsIncome(data?.datapoints)

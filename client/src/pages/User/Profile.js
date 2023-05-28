@@ -16,7 +16,7 @@ const Profile = () => {
     const handleEditProfile = async (e) => {
       e.preventDefault()
       try{
-        const res  = await axios.post(`/api/v1/auth/update-profile/${auth?.user?._id}`,{name, email, profession, income})
+        const res  = await axios.post(`https://my-money-app.vercel.app/api/v1/auth/update-profile/${auth?.user?._id}`,{name, email, profession, income})
         if(res && res?.data?.success){
           //console.log(res?.data);
           toast.success("Profile Updated")

@@ -18,7 +18,7 @@ const Register = () => {
     const handleRegisterSubmit = async (e) => {
         e.preventDefault()
         try {
-            const res = await axios.post(`/api/v1/auth/register`, {name, email,password , question})
+            const res = await axios.post(`https://my-money-app.vercel.app/api/v1/auth/register`, {name, email,password , question})
             //console.log(res);
             if(res && res?.data?.success){
                 toast.success("Registered Successfully")

@@ -20,7 +20,7 @@ const Login = () => {
     const handleLoginSubmit = async (e) => {
         e.preventDefault()
         try {
-            const res = await axios.post('/api/v1/auth/login',{email, password})
+            const res = await axios.post('https://my-money-app.vercel.app/api/v1/auth/login',{email, password})
             console.log(res);
             if(res && res?.data?.success){
                 setAuth({

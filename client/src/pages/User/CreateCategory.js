@@ -22,7 +22,7 @@ const CreateCategory = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try{
-            const {data} = await axios.post('/api/v1/category/create-category',{title, userId}) 
+            const {data} = await axios.post('https://my-money-app.vercel.app/api/v1/category/create-category',{title, userId}) 
             if(data?.success){
                 //console.log(data);
                 toast.success(`${data.cat.title} is created`)
@@ -43,7 +43,7 @@ const CreateCategory = () => {
     const handleUpdate = async (e) => {
         e.preventDefault()
         try{
-            const {data} = await axios.post(`/api/v1/category/update-category/${selected._id}`,{title: updatedTitle, userId: userId})
+            const {data} = await axios.post(`https://my-money-app.vercel.app/api/v1/category/update-category/${selected._id}`,{title: updatedTitle, userId: userId})
             if(data.success){
                 toast.success(`${updatedTitle} is updated`)
                 setUpdatedTitle("")
@@ -63,7 +63,7 @@ const CreateCategory = () => {
     const handleDelete = async (id) => {
         
         try{
-            const {data} = await axios.post(`/api/v1/category/delete-category/${id}`)
+            const {data} = await axios.post(`https://my-money-app.vercel.app/api/v1/category/delete-category/${id}`)
             if(data.success){
                 toast.success( 'Deleted Successfully')
                 
@@ -83,7 +83,7 @@ const CreateCategory = () => {
         //console.log(typeof(userId));
          //console.log(userId)
         try{
-            const {data} = await axios.get('/api/v1/category/categories', {params: { userId }})
+            const {data} = await axios.get('https://my-money-app.vercel.app/api/v1/category/categories', {params: { userId }})
             if(data.success){
                  setCategories(data.allCatOfUser)
                 // console.log(categories);

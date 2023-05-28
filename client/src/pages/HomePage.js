@@ -3,8 +3,6 @@ import Layout from '../components/Layout/Layout'
 import { useAuth } from '../context/auth'
 import { NavLink } from 'react-router-dom'
 const HomePage = () => {
-  const [auth,setAuth] = useAuth();
-
   return (
     <Layout title={'Welcome'}>
 <div className='register flex flex-col min-h-screen items-center justify-center lg:m-20 m-10'>
