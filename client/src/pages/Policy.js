@@ -4,8 +4,8 @@ import { NavLink } from 'react-router-dom'
 const Policy = () => {
   return (
     <Layout title={'Privacy Polciy - My App'}>
-        <div className='register flex flex-col items-center justify-center lg:m-20 m-10'>
-        <div className='register-title-div m-10'>
+        <div className='min-h-screen flex flex-col items-center justify-center lg:m-20 m-10'>
+        <div className='privacy-div m-10'>
            <h1 className='register-title text-2xl md:text-4xl'>Privacy Polciy</h1>
            <div>
                <ul>

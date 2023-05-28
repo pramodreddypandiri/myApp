@@ -26,7 +26,7 @@ const Contact = () => {
   }
   return (
     <Layout title={'Contact Us - My App'}>
-        <div className='register flex flex-col items-center justify-center m-20'>
+        <div className='register flex min-h-screen flex-col items-center justify-center m-20'>
         <div className='register-title-div m-10'>
            <h1 className='register-title text-2xl md:text-4xl'>Contact Form</h1>
         </div>

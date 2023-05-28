@@ -289,45 +289,36 @@ export const getCategoriesAndAmountForMonthExpense = asyncHandler(async (req, re
  * @Parametes userId
  @ returns string of hundred words
  */
-// export const getSuggestions = asyncHandler(async (req, res) =>{
-//     try{
-//         const {userId} = req.query
-//         console.log(userId);
-//         if(!userId){
-//             throw new CustomError("User Id is required")
-//         }
-//         const allTransactionsOfUser = await Transaction.find({ userId}).populate('categoryId')
-//         if(!allTransactionsOfUser){
-//             throw new CustomError("Unable to get all transaction")
-//         }
-//         const input = `I am giving you an array of objects which are records of a user expenses and income, i want you to analyze those give insights or feedback to spend money wisely. here is records, ${allTransactionsOfUser}`
-//         const configuration = new Configuration({
-//             apiKey: process.env.OPENAI_API_KEY,
-//         });
-//         const openai = new OpenAIApi(configuration);
-//         const response = await openai.createCompletion({
-//               model: 'davinci',
-//               prompt : input, 
-//               max_tokens: 100,
-//               temperature: 0.5,
-//               n: 1
-//             })
-//         if(!response){
-//             throw new CustomError("NO response from openaiapi")
-//         } 
-//         console.log(response);
-//         res.status(200).json({
-//             success: true,
-//             message: 'got response from openai api',
-//             response
-//         })
-          
-//     } catch(error){
-//         console.log(error);
-//         res.status(500).json({
-//             success: false,
-//             message: "Something went wrong in getSuggestions"
-//         })
-//     }
+export const getAiFeedBack = asyncHandler(async (req, res) => {
+    const {prompt} = req.body
+    //console.log(prompt);
+    try{
+        //console.log(process.env.OPENAI_API_KEY);
+        const configuration = new Configuration({
+        apiKey: process.env.OPENAI_API_KEY,
+        });
+        //console.log("after configuration");
+    const openai = new OpenAIApi(configuration);
+    //console.log("after OpenAIApi");
+    const result = await openai.createCompletion({
+      model: "text-davinci-003",
+      prompt: prompt,
+      temperature: 0,
+      max_tokens: 500,
+    });
+    console.log("response", result.data.choices[0].text);
+    res.status(200).json({
+        airesponse : result.data.choices[0].text,
+        success: true,
+        message: "Successfull in getting ai response"
 
-// })
+    })
+    } catch(error){
+        res.status(500).json({
+            success: false,
+            message: "Error in getting ai response"
+        })
+        console.log(error.message);
+
+    }
+})

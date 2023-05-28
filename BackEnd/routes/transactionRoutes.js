@@ -1,5 +1,5 @@
 import express from "express";
-import { createTransaction, deleteTransaction, getAllTransactionsOfUser, getAllTransactionsOfUserUnderCat, updateTransaction,getCategoriesAndAmountForMonthExpense, getCategoriesAndAmountExpense,  } from "../controllers/transactionController.js";
+import { createTransaction, deleteTransaction, getAllTransactionsOfUser, getAllTransactionsOfUserUnderCat, updateTransaction,getCategoriesAndAmountForMonthExpense, getCategoriesAndAmountExpense, getAiFeedBack} from "../controllers/transactionController.js";
 import {isLoggedIn} from '../middlewares/auth.middleware.js'
 import formidable from 'express-formidable'
 const router = express.Router();
@@ -18,5 +18,5 @@ router.get('/category-sum', isLoggedIn, getCategoriesAndAmountForMonthExpense)
 // get categories total sum
 router.get('/category-totalsum', isLoggedIn, getCategoriesAndAmountExpense)
 //get suggestions 
-//router.get('/get-suggestion', isLoggedIn, getSuggestions )
+router.post('/get-ai-feedback', isLoggedIn, getAiFeedBack )
 export default router

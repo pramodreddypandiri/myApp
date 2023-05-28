@@ -99,7 +99,7 @@ const CreateCategory = () => {
     },[])
   return (
     <Layout title={'Manage - Create Category'}>
-        <div className='flex w-ull flex-col min-h-screen lg:flex-row '>
+        <div className='flex w-ull flex-col min-h-screen my-5 lg:flex-row '>
             <div className=''>
                  <ManageMenu category={true} profile={false}/>
             </div>

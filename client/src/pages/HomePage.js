@@ -7,7 +7,7 @@ const HomePage = () => {
 
   return (
     <Layout title={'Welcome'}>
-<div className='register flex flex-col items-center justify-center lg:m-20 m-10'>
+<div className='register flex flex-col min-h-screen items-center justify-center lg:m-20 m-10'>
         <div className='home-title-div m-10'>
            <h1 className='home-title text-2xl md:text-4xl'>Hey! Welcome.</h1>
            <div>

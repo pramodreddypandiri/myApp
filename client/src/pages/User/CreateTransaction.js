@@ -159,7 +159,7 @@ const CreateTransaction = () => {
     },[])
   return (
      <Layout title={"Transactions - MyApp"}>
-        <div className='container mx-auto flex flex-col lg:flex-row  items-center lg:items-start  min-h-screen '>
+        <div className='container mx-auto flex flex-col lg:flex-row my-5 items-center lg:items-start  min-h-screen '>
             <div className='create-transaction w-[300px] lg:mx-10'>
                 <h1 className='text-2xl font-bold'>Create Transaction</h1>
                 <div className='transaction-input border-2  border-black mb-10 rounded-lg'>
