@@ -5,7 +5,7 @@ import formidable from 'express-formidable'
 const router = express.Router();
 // create transaction route
 router.post('/create-transaction', isLoggedIn,formidable(), createTransaction)
-//delete transaction route
+//delete transaction routes
 router.post('/delete-transaction/:id', isLoggedIn, deleteTransaction)
 //update transaction route
 router.post('/update-transaction/:id', isLoggedIn,formidable(), updateTransaction)
