@@ -112,7 +112,7 @@ const CreateTransaction = () => {
     const getAllTransactionsOfUser = async () => {
         //console.log(userId);
         try{
-            const{ data } = await axios.get('https://my-money-app.vercel.app/api/v1/transaction/transactions', {params : {userId : userId}})
+            const{ data } = await axios.get('http://localhost:8088/api/v1/transaction/transactions', {params : {userId : userId}})
             if (data?.success){
                 setAllTransactionsOfUser(data?.allTransactionsOfUser)
                 setLimitedTransactions(data?.allTransactionsOfUser.slice(0,10))

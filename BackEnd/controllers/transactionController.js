@@ -101,7 +101,7 @@ export const updateTransaction = asyncHandler(async (req, res) => {
     }
 })
 /*
-* @getAll transactions
+* @getAll transactions of a user
 * @route : /api/v1/transaction/transactions/userId:
 * @description :  controller for fetching all transactions of a user
  * @Parametes {userId}

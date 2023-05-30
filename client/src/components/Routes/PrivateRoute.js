@@ -10,7 +10,7 @@ const PrivateRoute = () => {
     useEffect( () => {
         const authCheck = async () =>{
             console.log(auth?.token);
-             const res = await axios.get('http://localhost:8088/api/v1/auth/user-auth',{
+             const res = await axios.get('https://my-money-app.vercel.app/api/v1/auth/user-auth',{
                 headers : {
                     Authorization : `Bearer ${auth?.token}`
                 }
