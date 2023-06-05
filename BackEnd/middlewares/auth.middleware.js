@@ -14,7 +14,7 @@ export const isLoggedIn = asyncHandler(async (req, res, next) => {
     //console.log("token");
     //console.log(token);
     if(!token){
-        throw new CustomError("Not Logged in", 400)
+        throw new CustomError("You are Not Logged in", 400)
     }
     try{
         
